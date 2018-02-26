@@ -1,0 +1,95 @@
+block head
+  meta(charset="utf-8")
+  meta(http-equiv="X-UA-Compatible", content="IE=edge")
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  meta(name="format-detection", content="telephone=no")
+
+  //- ページタイトル
+  if page.title
+    title #{page.title} | #{siteName}
+  else
+    title #{siteName}
+    
+  //- ページディスクリプション
+  if page.description
+    meta(name="description" content=page.description)
+  else if key == "index"
+    meta(name="description" content=siteDescription)
+  
+  
+  //- ページOGP用タイトル
+  if page.ogTitle
+    meta(content=page.ogTitle + ' | ' + siteName property="og:title")
+  else
+    meta(content=siteName property="og:title")
+  
+  //- ページOGP用説明文
+  if page.ogDescription
+    meta(content=page.ogDescription property="og:description")
+  else
+    meta(content=siteDescription, property="og:description")
+  
+  //-  ページのタイプ（OGP）トップページはwebsiteなど。それ以下はarticle
+  meta(content=(key == "index" ? "website" : "article"), property="og:type")
+  
+  //- ページOGPURL
+  if !release
+    meta(content=testingDomain+page.name+".html", property="og:url")
+  else
+    meta(content=domain+page.name+".html", property="og:url")
+  
+  //- サイトの名前 OGP
+  meta(content=siteName property="og:site_name")
+  
+  //- サイトのOGP画像
+  if !release
+    if page.ogImage
+      meta(content=testingDomain+page.ogImage, property="og:image")
+    else 
+      meta(content=testingDomain+siteOgImage, property="og:image")
+  else
+    if page.ogImage
+      meta(content=domain+page.ogImage, property="og:image")
+    else 
+      meta(content=domain+siteOgImage, property="og:image")
+  
+  //- Twitterでの画像の表示のされ方
+  meta(name="twitter:card" content="summary")
+  
+  //- Twitterで表示させる画像。
+  if !release
+    if page.ogImage
+      meta(name="twitter:image:src" content=testingDomain+page.ogImage)
+    else
+      meta(name="twitter:image:src" content=testingDomain+siteOgImage)
+  else
+    if page.ogImage
+      meta(name="twitter:image:src" content=domain+page.ogImage)
+    else
+      meta(name="twitter:image:src" content=domain+siteOgImage)
+  
+  //- 64pxと180pxの正方形のアイコンをそれぞれ以下のファイル名にし、imgディレクトリに設置する。
+  //- 詳細はREADME
+  if faviconUrl
+    link(rel="icon" href=facviconUrl type="image/x-icon")
+  if iconUrl
+    link(rel="apple-touch-icon" href=iconUrl sizes="180x180")
+
+  //- cssの読み込み
+  //- リリース時はインラインCSSにする。
+  block css
+    if page.path
+      if !release || !inlining
+        link(rel="stylesheet", href=page.path+"css/"+page.name+".css")
+      else if release && inlining
+        style.
+          @@include(page.path+"css/#{page.name}.css")
+    else
+      if !release || !inlining
+        link(rel="stylesheet", href="css/"+page.name+".css")
+      else if release && inlining
+        style.
+          @@include("css/#{page.name}.css")
+    
+  if !release || page.noindex == 'yes'
+    meta(name="robots" content="noindex")

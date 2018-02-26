@@ -1,0 +1,51 @@
+//- リリース時フラグ。リリース時はtrue
+//- 以下の項目の切り替え
+  ・CSSとJSのインライン化
+  ・OGPタグなどの検証環境と本番環境のURLの切り替え
+  ・metaタグ"noindex"の表示/非表示切り替え
+- var release = false
+
+//- CSSとJSの(上のreleaseがtrueの時の)インライン化の切り替え
+- var inlining = true
+
+
+//- 本番環境のURL
+- var domain = 'https://example.com/'
+//- 検証環境のURL
+- var testingDomain = 'http://example-test.com/'
+
+- var siteName = 'site name'
+- var siteDescription = 'site description'
+- var siteOgImage = 'img/ogimg.jpg'
+- var faviconUrl = 'img/favicon.ico'
+- var iconUrl = 'img/apple-touch-icon.png'
+
+- 
+  var settings = {
+    index : {
+      //- ファイル名の設定。トップページは必ずindex
+      name : 'index',  
+    },
+    test : {
+      name : 'test',
+      title : 'test page',
+      description : 'test page description',
+      ogTitle : 'test page title for OGP',
+      ogDescription : 'test page description for OGP',
+      ogImage : 'img/testogimg.jpg'
+    },
+    underlayer : {
+      page1 : {
+        //- cssのパスを読みにいく際に、必要
+        path: '../',
+        name : 'underlayer/page1',
+        title : 'underlayer page1',
+        description : 'underlayer page1 description',
+        ogTitle : 'underlayer page1 for OGP',
+        ogDescription : 'underlayer page1 description for OGP',
+        ogImage : 'img/underlayer-page1-img.jpg',
+        //- ページをindexさせたくない場合はyes
+        noindex : 'yes' 
+      }
+    }
+  }

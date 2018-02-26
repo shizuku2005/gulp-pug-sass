@@ -1,0 +1,41 @@
+@charset "UTF-8";
+// 各ブラウザのcssハック用mixin
+
+// IE11
+@mixin HackIE11 {
+  @media all and (-ms-high-contrast:none) {
+    *::-ms-backdrop, & {
+      @content;
+    }
+  }
+}
+
+// EdgeHack
+@mixin HackEdge {
+  @supports (-ms-ime-align:auto) {
+    & {
+      @content;
+    }
+  }
+}
+
+// Chromeハック ※適用未確認
+@mixin HackChrome {
+  @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
+    @content;
+  }
+}
+
+// Firefoxハック ※適用未確認
+@mixin HackFirefox {
+  @-moz-document url-prefix() {
+    @content;
+  }
+}
+
+// Safariハック
+@mixin HackSafari {
+  _::-webkit-full-page-media, _:future, :root & {
+    @content;
+  }
+}

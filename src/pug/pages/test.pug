@@ -1,0 +1,10 @@
+extends ../layouts/layout.pug
+
+block vars
+  include ../config.pug
+    - var key = "test"
+    - var page = settings[key]
+
+block contents
+  main.main
+    h2 This is Testpage

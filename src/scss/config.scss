@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+// Releaseフラグ
+$release: false;
+
+// CSSのインライン化
+$inlining: true;
+
+// -- -- z-indexの管理 -- --
+$z-map: (
+  // header, //記述例
+  // nav,
+  // nav-menu
+);
+
+@function z($name) {
+  @return index($z-map, $name);
+}
+// 使用例
+// z-index: z(header); // 1
+
+
+// -- -- 画像パス -- --
+@function imageUrl {
+  @if ($release and $inlining) {
+    @return "/img/";
+  } @else {
+    @return "../img/";
+  }
+}
+
+// 使用例
+// .test {
+//   background: url(imageUrl()+"test.jpg");
+// // もしくは
+//   @include backgroundImg("test.jpg");
+// }
+
+
+// -- -- 変数 -- --
+// color
+$black: #333;
+
+// animation
+$transitionTime: .3s!default;
+
+// sizes
+$pcWidth: 1000px;
+$spWidth: 85%;
+
+// Responsive
+$breakPointTablet: 768px;

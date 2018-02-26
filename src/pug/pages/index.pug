@@ -1,0 +1,20 @@
+extends ../layouts/layout.pug
+
+block vars
+  include ../config.pug
+    - var key = "index"
+    - var page = settings[key]
+
+block contents
+  main.main
+    svg(viewBox="0 0 600 300")
+      // Symbol
+      symbol#s-text
+        text(text-anchor="middle", x="50%", y="50%", dy=".35em")
+          | This is Gulp
+      // Duplicate symbols
+      use.text(xlink:href="#s-text")
+      use.text(xlink:href="#s-text")
+      use.text(xlink:href="#s-text")
+      use.text(xlink:href="#s-text")
+      use.text(xlink:href="#s-text")

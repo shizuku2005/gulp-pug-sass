@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+@import "reset";
+
+@import "config";
+@import "library/functions";
+
+// mixins, components, modules以下は増やす度にここに読み込んでいく。
+// gulp-sass-globが解決すれば、全てワイルドカードで読み込ませる。
+@import "library/mixins/forms";
+@import "library/mixins/generic";
+@import "library/mixins/hacks";
+@import "library/mixins/layouts";
+@import "library/mixins/textAround";
+
+@import "library/projectMixins/mixin";
+
+@import "components/component";
+
+@import "modules/module";
+
+
+body {
+  font-family: "Dosis", "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+// selectのスタイルリセット&統一。一般的なスタイルに全ブラウザ統一される。
+// ただ、DOMの構造を以下のsassの構造に合わせる必要がある。具体的にはselectWrapでselectを囲む。
+.selectWrap {
+  position: relative;
+  display: inline-block;
+  select {
+    height: 27px;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+    padding-right: 15px;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    background: #fff;
+    height: 100%;
+    width: 30px;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    right: 6px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 4px 0 4px;
+    border-color: #000 transparent transparent transparent;
+  }
+}
+
+.spview {
+  display: none;
+  color: #000;
+}
+
+@include mediaqueryTablet {
+  .pcview {
+    display: none;
+  }
+  .spview {
+    display: block;
+  }
+}

@@ -1,0 +1,5 @@
+if !release || !inlining
+  script(src="js/script.js")
+else if release && inlining
+  script.
+    @@include("js/script.js")

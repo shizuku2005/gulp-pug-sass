@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+@mixin pcInner($marginTop: 0, $marginBottom: 0, $paddingSide: 20px, $paddingUpdown: 0px) {
+  width: 100%;
+  max-width: $pcWidth;
+  margin: $marginTop auto $marginBottom;
+  padding: 0 $paddingSide;
+  @include mediaqueryTablet {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+@mixin spInner {
+  width: $spWidth;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// 子要素の上下真ん中寄せ
+@mixin centering($target: "*") {
+  position: relative;
+  overflow: hidden;
+  > #{$target} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
