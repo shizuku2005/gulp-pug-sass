@@ -2,17 +2,19 @@
   "name": "gulp-for-pug-and-sass",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:shizuku2005/gulp-pug-sass.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+	"bugs": {
+		"url": "https://github.com/shizuku2005/gulp-pug-sass/issues"
+	},
+  "author": "kazuma takeda",
+  "license": "MID",
   "homepage": "",
   "devDependencies": {
     "browser-sync": "^2.23.6",
