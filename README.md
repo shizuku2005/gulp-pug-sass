@@ -114,8 +114,6 @@ gulpにキャッシュが溜まった時、pugやsassがうまくコンパイル
 
 ### 参考
 今回参考にしたURLなど
-#### Block,IncludeやMixinなどの使い方
-https://qiita.com/kotazi_/items/f8f75fff356e0dbd3aa3
 #### ディレクトリ構成などを参考にした
 https://qiita.com/garakuta/items/c83548c74e45838e3fe0
 #### 公式ドキュメント
@@ -152,6 +150,10 @@ src/jsディレクトリ以下のファイルは全てdist/js以下にscript.js�
 jpg,jpeg,png,gif,svgファイルは圧縮される。
 icoファイルに関してはdist/img以下にコピーはされるが、圧縮はされない。
 上記ファイル以外は監視もコピーもしないので、追加でサポートしたい拡張子があればgulpfile.jsで定義する。
+
+## その他ファイルについて
+フォントなど、プロジェクト独自で使うファイル群はsrc/other以下に入れるようにする。
+gulpfileではdistディレクトリにコピーされるタスクのみ記述してある。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 

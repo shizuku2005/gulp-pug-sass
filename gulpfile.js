@@ -66,7 +66,8 @@ var src = {
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
   'styles': ['./src/scss/pages/**/*.scss'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
-  'js': './src/js/**/*.js'
+  'js': './src/js/**/*.js',
+  'other': './src/other/**/*'
 }
 
 // 出力ディレクトリの指定
@@ -216,6 +217,13 @@ gulp.task('imagemin', function(){
   .pipe(browserSync.reload({stream: true}))
 })
 
+// その他ファイルのコピータスク
+gulp.task('copy-other', function(){
+  gulp.src(src.other)
+  .pipe(gulp.dest('./dist/'))
+  .pipe(browserSync.reload({stream: true}))
+})
+
 // gulp実行時にサーバーを立ち上げ、ブラウザの新しいタブでWebページを表示する。
 gulp.task('browser-sync', function() {
   browserSync({
@@ -227,12 +235,13 @@ gulp.task('browser-sync', function() {
 })
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
-gulp.task('default', ['html','styles','javascript','imagemin','browser-sync'], function () {
+gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
   gulp.watch('./src/**/*.pug', ['html'])
   gulp.watch('./src/scss/**/*.scss', ['styles'])
   gulp.watch('./src/js/**/*.js', ['javascript'])
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
+  gulp.watch('./src/other/**/*', ['copy-other'])
 })
 
 // ビルドタスクの設定。gulp buildを実行した時。
-gulp.task('build', ['html','styles','javascript','imagemin'])
+gulp.task('build', ['html','styles','javascript','imagemin','copy-other'])
