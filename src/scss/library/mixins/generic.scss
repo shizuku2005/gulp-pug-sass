@@ -22,8 +22,8 @@
 }
 
 // 背景のよく使われる上下真ん中寄せの設定
-@mixin backgroundImg($path, $position: center) {
-  background: url(imageUrl()+"#{$path}");
+@mixin backgroundImg($path, $position: center, $addpath: "") {
+  background: url("#{$addpath}"+imageUrl()+"#{$path}");
   background-size: cover;
   background-position: $position;
   background-repeat: no-repeat;
