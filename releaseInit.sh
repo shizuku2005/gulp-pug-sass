@@ -17,7 +17,7 @@ esac
 sed -i -e 's/release = false/release = true/g' ./src/pug/config.pug
 sed -i -e 's/$release: false/$release: true/g' ./src/scss/config.scss
 
-gulp styles javascript imagemin --env production
+gulp styles javascript imagemin copy-other --env production
 gulp html --env production
 
 sed -i -e 's/release = true/release = false/g' ./src/pug/config.pug
