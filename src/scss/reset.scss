@@ -85,10 +85,11 @@ button {
 }
 
 input {
-  &[type="file"], [type="range"] {
+  &[type="file"], &[type="range"] {
     border: none;
   }
-  &:not([type="radio"]), &:not([type="checkbox"]), &:not([type="range"]) {
+  &[type="file"], &[type="range"], &[type="search"], &[type="submit"], &[type="text"], &[type="button"],
+  &[type="email"], &[type="number"], &[type="password"], &[type="reset"], &[type="tel"]{
     appearance: none;
     font-size: 16px;
   }
