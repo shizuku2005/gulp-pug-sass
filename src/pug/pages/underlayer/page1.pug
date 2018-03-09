@@ -1,9 +1,8 @@
 extends ../../layouts/layout.pug
 
-block vars
-  include ../../config.pug
-    - var key = "underlayer"
-    - var page = settings[key].page1
+block append vars
+  - var key = "underlayer"
+  - var page = settings[key].page1
 
 block contents
   main.main

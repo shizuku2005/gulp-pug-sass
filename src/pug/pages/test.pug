@@ -1,10 +1,76 @@
 extends ../layouts/layout.pug
 
-block vars
-  include ../config.pug
-    - var key = "test"
-    - var page = settings[key]
+block append vars
+  - var key = "test"
+  - var page = settings[key]
 
 block contents
   main.main
-    h2 This is Testpage
+    .area
+      .wrapper
+        table
+          tbody
+            tr.dummy
+              td
+              td
+              td
+              td
+          tbody.tbody
+            tr
+              td.out-of-table-fixed 表の外側で固定
+              td.in-table-fixed 表の内側で固定
+              td ここから右のセルだけがスクロールされます
+              td text1
+              td あいうえお
+            tr
+              td.out-of-table-fixed 表の外側で固定
+              td.in-table-fixed 表の内側で固定
+              td ここから右のセルだけがスクロールされます
+              td text2
+              td かきくけこ
+            tr
+              td.out-of-table-fixed 表の外側で固定
+              td.in-table-fixed 表の内側で固定
+              td ここから右のセルだけがスクロールされます
+              td text3
+              td さしすせそ
+    style.
+      * {
+      box-sizing: border-box;
+      }
+      .area {
+      width: 564px;
+      position: relative;
+      }
+      .wrapper {
+      width: 360px;
+      overflow: auto;
+      margin-left: 180px;
+      }
+      table {
+      background: mintcream;
+      table-layout: fixed;
+      width: 100%;
+      border-spacing: 0;
+      }
+      td {
+      width: 180px;
+      height: 60px;
+      padding: 0;
+      vertical-align: top;
+      }
+      tr.dummy,tr.dummy * {
+      height: 0;
+      border: 0;
+      font-size: 0;
+      visibility: hidden;
+      }
+      td.out-of-table-fixed {
+      position: absolute;
+      left: 0px;
+      }
+      td.in-table-fixed {
+      position: absolute;
+      background: mintcream;
+      left: 180px;
+      }

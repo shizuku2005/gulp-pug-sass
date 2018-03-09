@@ -2,6 +2,7 @@ include ../mixins/generic.pug
 
 doctype html
 block vars
+  include ../config.pug
 html(lang="ja" dir="ltr")
   head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# " + (key == "index" ? "website" : "article") + ": http://ogp.me/ns/" + (key == "index" ? "website" : "article") + "#")
     include ../includes/meta.pug
