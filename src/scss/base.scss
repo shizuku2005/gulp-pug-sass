@@ -1,25 +1,5 @@
 @charset "UTF-8";
 
-@import "reset";
-
-@import "config";
-@import "library/functions";
-
-// mixins, components, modules以下は増やす度にここに読み込んでいく。
-// gulp-sass-globが解決すれば、全てワイルドカードで読み込ませる。
-@import "library/mixins/forms";
-@import "library/mixins/generic";
-@import "library/mixins/hacks";
-@import "library/mixins/layouts";
-@import "library/mixins/textAround";
-
-@import "library/projectMixins/mixin";
-
-@import "components/component";
-
-@import "modules/module";
-
-
 body {
   font-family: "Dosis", "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
   font-size: 16px;
