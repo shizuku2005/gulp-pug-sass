@@ -72,30 +72,3 @@
     }
   }
 }
-
-// 棒付き矢印 ※適用未確認
-@mixin arrow($size, $border-width, $border-style, $border-color, $direction) {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  width: $size;
-  height: $size;
-  margin-top: - ($size / 2);
-  border: $border-width $border-style $border-color;
-  @if $direction == up {
-    transform: rotate(-135) + deg;
-  }
-  @else if $direction == under {
-    transform: rotate(45) + deg;
-  }
-  @else if $direction == right {
-    transform: rotate(-45) + deg;
-  }
-  @else if $direction == left {
-    transform: rotate(135) + deg;
-  }
-  @else {
-    transform: rotate($direction) + deg;
-  }
-}
