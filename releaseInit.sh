@@ -1,8 +1,14 @@
 echo "本番環境用 Buildを実行中..."
 rm -rf dist/
-rm -rf node_modules
 
-npm install
+echo "キャッシュをクリアをスキップしますか？ [yes/no]"
+read Cacheclear
+case Cacheclear in
+  "" | "Y" | "y" | "yes" | "Yes" | "YES" );;
+  * )
+  rm -rf node_modules
+  npm install
+esac
 
 echo "CSSとJSはインライン化させますか？ [yes/no]"
 read Inlining
