@@ -162,7 +162,6 @@ gulp.task('styles', function() {
 // javascriptの圧縮
 gulp.task('javascript', function(){
   gulp.src(src.js)
-  .pipe(cache('javascript'))
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
   // JSの圧縮
