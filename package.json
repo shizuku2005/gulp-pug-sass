@@ -10,9 +10,9 @@
     "type": "git",
     "url": "git@github.com:shizuku2005/gulp-pug-sass.git"
   },
-	"bugs": {
-		"url": "https://github.com/shizuku2005/gulp-pug-sass/issues"
-	},
+  "bugs": {
+    "url": "https://github.com/shizuku2005/gulp-pug-sass/issues"
+  },
   "author": "kazuma takeda",
   "license": "MID",
   "homepage": "",

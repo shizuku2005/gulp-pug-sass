@@ -6,8 +6,8 @@
 
 @import "variables";
 
-@import "/library/functions/numbers";
-@import "/library/functions/map";
+@import "library/functions/numbers";
+@import "library/functions/map";
 
 // mixins, components, modules以下は増やす度にここに読み込んでいく。
 // gulp-sass-globが解決すれば、全てワイルドカードで読み込ませる。
