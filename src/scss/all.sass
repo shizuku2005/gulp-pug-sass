@@ -1,0 +1,26 @@
+@charset "UTF-8"
+
+@import reset
+
+@import config
+
+@import variables
+
+@import library/functions/numbers
+@import library/functions/map
+
+// mixins, components, modules以下は増やす度にここに読み込んでいく。
+// gulp-sass-globが解決すれば、全てワイルドカードで読み込ませる。
+@import library/mixins/forms
+@import library/mixins/generic
+@import library/mixins/hacks
+@import library/mixins/layouts
+@import library/mixins/textAround
+
+@import library/projectMixins/mixin
+
+@import base
+
+@import components/component
+
+@import modules/module

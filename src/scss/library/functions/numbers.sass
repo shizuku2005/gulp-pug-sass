@@ -1,0 +1,58 @@
+@charset "UTF-8"
+
+// 数値の単位を外す。
+@function stripUnit($number)
+  @if type-of($number) == "number" and not unitless($number)
+    @return $number / ($number * 0 + 1)
+
+  @return $number
+
+// これより下の数値制御functionを制御するための関数
+@function toFixed($number, $digits: 0, $round: "round")
+  $n: 1
+
+  // $number must be a numbers
+  @if type-of($number) != number
+    @warn "#{$number} is not a number."
+
+    @return $number
+
+  // $digits must be a unitless number
+  @if type-of($digits) != number
+    @warn "#{$digits} is not a number."
+
+    @return $number
+  @else if not unitless($digits)
+    @warn "#{$digits} has a unit."
+
+    @return $number
+
+  @for $i from 1 through $digits
+    $n: $n * 10
+
+  @if $round == "round"
+    @return round($number * $n) / $n
+  @else if $round == "ceil"
+    @return ceil($number * $n) / $n
+  @else if $round == "floor"
+    @return floor($number * $n) / $n
+  @else
+    @warn "#{$round} is undefined keyword."
+
+    @return $number
+
+// 使用方法
+// width: floor-decimal(100 / 6, 6) + %; => 16.6666
+// など
+
+// Round (四捨五入)
+@function roundDecimal($number, $digits: 0)
+  @return toFixed($number, $digits, "round")
+
+// Ceil (切り上げ)
+@function ceilDecimal($number, $digits: 0)
+  @return toFixed($number, $digits, "ceil")
+
+// Floor (切り捨て)
+@function floorDecimal($number, $digits: 0)
+  @return toFixed($number, $digits, "floor")

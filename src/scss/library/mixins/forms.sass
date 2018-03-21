@@ -1,0 +1,38 @@
+@charset "UTF-8"
+
+// form関連のreset
+
+// input[type=search]のスタイルをリセット テキストの消去ボタンを削除
+=inputSearchReset
+  input[type=search]
+    -webkit-appearance: textfield
+    &:focus
+      outline-offset: -2px
+    &::-webkit-search-decoration
+      display: none
+    &::-webkit-search-cancel-button
+      display: none
+
+// type=numberの矢印を消去
+=inputNumberReset
+  input[type="number"]
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button
+      -webkit-appearance: none
+      -moz-appearance: textfield
+      margin: 0
+
+// placeholderのcolor指定
+=placeholderColor($color)
+  &:placeholder-shown
+    color: $color
+  &::-webkit-input-placeholder
+    color: $color
+  &:-moz-placeholder
+    color: $color
+    opacity: 1
+  &::-moz-placeholder
+    color: $color
+    opacity: 1
+  &:-ms-input-placeholder
+    color: $color

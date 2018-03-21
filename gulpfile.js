@@ -48,14 +48,14 @@ var gulp =  require('gulp')
   notify = require("gulp-notify")
   // gulpのキャッシュ
   cache = require('gulp-cached')
-  // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われます。
+  // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われる。
   changed = require('gulp-changed')
   // if文を使えるようにする。
   gulpif = require('gulp-if')
   // gulpコマンドを実行する時、引数を指定することができるようにする。
   minimist = require('minimist')
-  // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現しています。
-  // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見てください。
+  // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
+  // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
   // https://www.npmjs.com/package/gulp-file-include
   fileinclude = require('gulp-file-include')
 
@@ -64,7 +64,7 @@ var gulp =  require('gulp')
 var src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
-  'styles': ['./src/scss/pages/**/*.scss'],
+  'styles': ['./src/sass/pages/**/*.+(scss|sass)'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
   'js': './src/js/**/*.js',
   'other': './src/other/**/*'
@@ -130,7 +130,7 @@ gulp.task('styles', function() {
   // .pipe(cache('styles'))
 
   // ワイルドカードでsassのincludeが実現できる。@import "partials/*";など
-  // 上手く行かず…そのうち解消したい。
+  // 上手く行かず...解消したい。
   // .pipe(glob())
 
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
@@ -223,7 +223,7 @@ gulp.task('copy-other', function(){
   .pipe(browserSync.reload({stream: true}))
 })
 
-// gulp実行時にサーバーを立ち上げ、ブラウザの新しいタブでWebページを表示する。
+// gulp実行時にサーバーを立ち上げ、デフォルトブラウザの新しいタブでWebページを表示する。
 gulp.task('browser-sync', function() {
   browserSync({
     server: {
@@ -236,7 +236,7 @@ gulp.task('browser-sync', function() {
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
 gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
   gulp.watch('./src/**/*.pug', ['html'])
-  gulp.watch('./src/scss/**/*.scss', ['styles'])
+  gulp.watch('./src/sass/**/*.+(scss|sass)', ['styles'])
   gulp.watch('./src/js/**/*.js', ['javascript'])
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
   gulp.watch('./src/other/**/*', ['copy-other'])
