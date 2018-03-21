@@ -1,5 +1,12 @@
-if !release || !inlining
-  script(src="js/script.js")
-else if release && inlining
-  script.
-    @@include("js/script.js")
+if page.path
+  if !release || !inlining
+    script(src=page.path+"js/script.js")
+  else if release && inlining
+    script.
+      @@include(page.path+"js/script.js")
+else
+  if !release || !inlining
+    script(src="js/script.js")
+  else if release && inlining
+    script.
+      @@include("js/script.js")
