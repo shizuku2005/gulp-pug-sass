@@ -33,7 +33,7 @@ block head
   meta(content=(key == "index" ? "website" : "article"), property="og:type")
   
   //- ページOGPURL
-  if !release
+  if environment == "development"
     meta(content=testingDomain+page.name+".html", property="og:url")
   else
     meta(content=domain+page.name+".html", property="og:url")
@@ -42,7 +42,7 @@ block head
   meta(content=siteName property="og:site_name")
   
   //- サイトのOGP画像
-  if !release
+  if environment == "development"
     if page.ogImage
       meta(content=testingDomain+page.ogImage, property="og:image")
     else 
@@ -57,7 +57,7 @@ block head
   meta(name="twitter:card" content="summary")
   
   //- Twitterで表示させる画像。
-  if !release
+  if environment == "development"
     if page.ogImage
       meta(name="twitter:image:src" content=testingDomain+page.ogImage)
     else
@@ -79,17 +79,17 @@ block head
   //- リリース時はインラインCSSにする。
   block css
     if page.path
-      if !release || !inlining
+      if environment == "development" || !inlining
         link(rel="stylesheet", href=page.path+"css/styles.css")
-      else if release && inlining
+      else if environment == "production" && inlining
         style.
           @@include(page.path+"css/styles.css")
     else
-      if !release || !inlining
+      if environment == "development" || !inlining
         link(rel="stylesheet", href="css/styles.css")
-      else if release && inlining
+      else if environment == "production" && inlining
         style.
           @@include("css/styles.css")
     
-  if !release || page.noindex == 'yes'
+  if environment == "development" || page.noindex == 'yes'
     meta(name="robots" content="noindex")

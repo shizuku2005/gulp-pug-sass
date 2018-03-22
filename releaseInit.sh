@@ -13,26 +13,19 @@ esac
 echo "CSSとJSはインライン化させますか？ [yes/no]"
 read Inlining
 
-case $Inlining in
-  "" | "Y" | "y" | "yes" | "Yes" | "YES" );;
-  * )
-    sed -i -e 's/inlining = true/inlining = false/g' ./src/pug/config.pug
-esac
-
-sed -i -e 's/release = false/release = true/g' ./src/pug/config.pug
-
 gulp styles javascript imagemin copy-other --env=production
-gulp html --env=production
 
-sed -i -e 's/release = true/release = false/g' ./src/pug/config.pug
+case $Inlining in
+  "" | "Y" | "y" | "yes" | "Yes" | "YES" )
+  gulp html --env=production --inline=true;;
+  * )
+  gulp html --env=production
+esac
 
 case $Inlining in
   "" | "Y" | "y" | "yes" | "Yes" | "YES" )
     rm -rf dist/css dist/js;;
   * )
-    sed -i -e 's/inlining = false/inlining = true/g' ./src/pug/config.pug
 esac
-
-rm ./src/pug/config.pug-e ./src/scss/config.scss-e
 
 echo "\n\tSuccess!\n"

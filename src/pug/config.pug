@@ -1,14 +1,3 @@
-//- リリース時フラグ。リリース時はtrue
-//- 以下の項目の切り替え
-  ・CSSとJSのインライン化
-  ・OGPタグなどの検証環境と本番環境のURLの切り替え
-  ・metaタグ"noindex"の表示/非表示切り替え
-- var release = false
-
-//- CSSとJSの(上のreleaseがtrueの時の)インライン化の切り替え
-- var inlining = true
-
-
 //- 本番環境のURL
 - var domain = 'https://example.com/'
 //- 検証環境のURL

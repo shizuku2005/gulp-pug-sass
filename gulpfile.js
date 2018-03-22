@@ -77,9 +77,9 @@ var dest = {
   'root': './dist/'
 }
 
-// 引数にproductionが渡ってくればtrue
 var isProduction = (yargs.env === 'production') ? true : false;
 var environment = (yargs.env === 'production') ? 'production' : 'development';
+var inlining = (yargs.inline === 'true') ? true : false;
 
 gulp.task('test', function () {
   console.log(isProduction);
@@ -103,6 +103,10 @@ gulp.task('html', function() {
     // Pugファイルのルートディレクトリを指定。
     // `/_includes/_layout`のようにルート相対パスで指定することができる。
     basedir: 'src/pug/pages',
+    locals: {
+      environment: environment,
+      inlining: inlining
+    },
 
     // Pugファイルの整形。圧縮する場合はfalse
     pretty: !isProduction
