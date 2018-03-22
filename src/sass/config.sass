@@ -1,11 +1,4 @@
 @charset "UTF-8"
-
-// Releaseフラグ
-$release: false
-
-// CSSのインライン化
-$inlining: true
-
 // -- -- z-indexの管理 -- --
 $z-map: header;
 
@@ -17,14 +10,14 @@ $z-map: header;
 
 // -- -- 画像パス -- --
 @function imageUrl
-  @if ($release and $inlining) 
+  @if ($env == "production") 
     @return "/img/";
   @else
     @return "../img/";
 
 // 使用例
-// .test {
-//   background: url(imageUrl()+"test.jpg");
+// .test
+//   background: url(imageUrl()+"test.jpg")
 // // もしくは
-//   @include backgroundImg("test.jpg");
+//   +backgroundImg("test.jpg")
 // }

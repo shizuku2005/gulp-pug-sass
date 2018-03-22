@@ -29,8 +29,6 @@ var gulp =  require('gulp')
   sourcemaps = require('gulp-sourcemaps')
   // 環境ごとの変数の値を変える
   sassVariables = require('gulp-sass-variables'),
-  // コマンドにオプションを指定する。
-  yargs = require('yargs').argv;
 
   // javascriptの圧縮
   uglify = require('gulp-uglify')
@@ -60,6 +58,8 @@ var gulp =  require('gulp')
   // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
   // https://www.npmjs.com/package/gulp-file-include
   fileinclude = require('gulp-file-include')
+  // コマンドにオプションを指定する。
+  yargs = require('yargs').argv;
 
 
 // 開発用ディレクトリの指定
@@ -79,6 +79,7 @@ var dest = {
 
 // 引数にproductionが渡ってくればtrue
 var isProduction = (yargs.env === 'production') ? true : false;
+var environment = (yargs.env === 'production') ? 'production' : 'development';
 
 gulp.task('test', function () {
   console.log(isProduction);
@@ -135,6 +136,7 @@ gulp.task('styles', function() {
   // ソースマップを書き出す準備
   .pipe(gulpif(!isProduction, sourcemaps.init()))
 
+    .pipe(sassVariables({ $env: environment }))
   // sassのコンパイル
   .pipe(sass())
 
