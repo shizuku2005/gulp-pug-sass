@@ -80,16 +80,16 @@ block head
   block css
     if page.path
       if !release || !inlining
-        link(rel="stylesheet", href=page.path+"css/"+page.name+".css")
+        link(rel="stylesheet", href=page.path+"css/styles.css")
       else if release && inlining
         style.
-          @@include(page.path+"css/#{page.name}.css")
+          @@include(page.path+"css/styles.css")
     else
       if !release || !inlining
-        link(rel="stylesheet", href="css/"+page.name+".css")
+        link(rel="stylesheet", href="css/styles.css")
       else if release && inlining
         style.
-          @@include("css/#{page.name}.css")
+          @@include("css/styles.css")
     
   if !release || page.noindex == 'yes'
     meta(name="robots" content="noindex")

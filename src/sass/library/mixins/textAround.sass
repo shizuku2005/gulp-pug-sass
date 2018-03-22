@@ -4,21 +4,20 @@
 
 // ol>liタグなどで、自動的に要素に順番に番号を振っていく。dl>dtなどにも使える。
 // beforeとafter
-/*
- *  $counterStyle に関しては様々な値が用意されている。
- *
- *  ・circle - 白丸
- *  ・cjk-ideographic - 漢数字
- *  ・decimal-leading-zero - 先頭に0をつけた算用数字 (01, 02, 03, 等)
- *  ・hiragana - ひらがな あいうえお順
- *  ・hiragana-iroha - ひらがな いろは順
- *  ・katakana - カタカナ アイウエオ順
- *  ・katakana-iraha - カタカナ イロハ順
- *  ・lower-alpha - 小文字のアルファベット (a, b, c, d, e 等)
- *  ・lower-roman - T小文字のローマ数字 (i, ii, iii, iv, v 等)
- *  ・upper-alpha - 大文字のアルファベット (A, B, C, D, E 等)
- *  ・upper-roman - 大文字のローマ数字 (I, II, III, IV, V 等)
- *  他にもいくつかあるが、恐らく使わない為、省略
+// $counterStyle に関しては様々な値が用意されている。
+//
+//  ・circle - 白丸
+//  ・cjk-ideographic - 漢数字
+//  ・decimal-leading-zero - 先頭に0をつけた算用数字 (01, 02, 03, 等)
+//  ・hiragana - ひらがな あいうえお順
+//  ・hiragana-iroha - ひらがな いろは順
+//  ・katakana - カタカナ アイウエオ順
+//  ・katakana-iroha - カタカナ イロハ順
+//  ・lower-alpha - 小文字のアルファベット (a, b, c, d, e 等)
+//  ・lower-roman - T小文字のローマ数字 (i, ii, iii, iv, v 等)
+//  ・upper-alpha - 大文字のアルファベット (A, B, C, D, E 等)
+//  ・upper-roman - 大文字のローマ数字 (I, II, III, IV, V 等)
+//  他にもいくつかあるが、恐らく使わない為、省略
 =autoNumbering($incrementer: items, $target: "li", $shifter: true, $fontSize: inherit, $startText: "", $endText: ".", $space: 20px, $topPosition: 0, $leftPosition: 0, $counterType: decimal, $startNumber: 0, $increase: 1, $beforeOrAfter: before)
   %counterStyle
     font-size: $fontSize
