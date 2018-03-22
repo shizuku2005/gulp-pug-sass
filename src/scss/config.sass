@@ -1,33 +1,26 @@
-@charset "UTF-8";
+@charset "UTF-8"
 
 // Releaseフラグ
-$release: false;
+$release: false
 
 // CSSのインライン化
-$inlining: true;
+$inlining: true
 
 // -- -- z-indexの管理 -- --
-$z-map: (
-  // header, //記述例
-  // nav,
-  // nav-menu
-);
+$z-map: header;
 
-@function z($name) {
-  @return index($z-map, $name);
-}
+@function z($name) 
+  @return index($z-map, $name)
 // 使用例
 // z-index: z(header); // 1
 
 
 // -- -- 画像パス -- --
-@function imageUrl {
-  @if ($release and $inlining) {
+@function imageUrl
+  @if ($release and $inlining) 
     @return "/img/";
-  } @else {
+  @else
     @return "../img/";
-  }
-}
 
 // 使用例
 // .test {
