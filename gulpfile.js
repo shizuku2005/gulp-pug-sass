@@ -27,6 +27,10 @@ var gulp =  require('gulp')
   glob = require('gulp-sass-glob')
   // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
   sourcemaps = require('gulp-sourcemaps')
+  // 環境ごとの変数の値を変える
+  sassVariables = require('gulp-sass-variables'),
+  // コマンドにオプションを指定する。
+  yargs = require('yargs').argv;
 
   // javascriptの圧縮
   uglify = require('gulp-uglify')
@@ -52,8 +56,6 @@ var gulp =  require('gulp')
   changed = require('gulp-changed')
   // if文を使えるようにする。
   gulpif = require('gulp-if')
-  // gulpコマンドを実行する時、引数を指定することができるようにする。
-  minimist = require('minimist')
   // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
   // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
   // https://www.npmjs.com/package/gulp-file-include
@@ -75,17 +77,12 @@ var dest = {
   'root': './dist/'
 }
 
-var options = minimist(process.argv.slice(2), envOption);
-var envOption = {
-  // オプションとする文字列 ex) --env
-  string: 'env',
-  // NODE_ENVに指定がなければ開発モードをデフォルトにする
-  default: { env: process.env.NODE_ENV || 'development' }
-};
 // 引数にproductionが渡ってくればtrue
-var isProduction = (options.env === 'production') ? true : false;
+var isProduction = (yargs.env === 'production') ? true : false;
 
-
+gulp.task('test', function () {
+  console.log(isProduction);
+});
 
 // pugのコンパイルなど
 gulp.task('html', function() {

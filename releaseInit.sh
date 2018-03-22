@@ -3,7 +3,7 @@ rm -rf dist/
 
 echo "キャッシュをクリアをスキップしますか？ [yes/no]"
 read Cacheclear
-case Cacheclear in
+case $Cacheclear in
   "" | "Y" | "y" | "yes" | "Yes" | "YES" );;
   * )
   rm -rf node_modules
@@ -23,8 +23,8 @@ esac
 sed -i -e 's/release = false/release = true/g' ./src/pug/config.pug
 sed -i -e 's/$release: false/$release: true/g' ./src/scss/config.scss
 
-gulp styles javascript imagemin copy-other --env production
-gulp html --env production
+gulp styles javascript imagemin copy-other --env=production
+gulp html --env=production
 
 sed -i -e 's/release = true/release = false/g' ./src/pug/config.pug
 sed -i -e 's/$release: true/$release: false/g' ./src/scss/config.scss
