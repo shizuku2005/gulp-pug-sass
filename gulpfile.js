@@ -64,7 +64,7 @@ var gulp =  require('gulp')
 var src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
-  'styles': ['./src/sass/pages/**/*.+(scss|sass)'],
+  'styles': ['./src/scss/pages/**/*.+(scss|sass)'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
   'js': './src/js/**/*.js',
   'other': './src/other/**/*'
@@ -236,7 +236,7 @@ gulp.task('browser-sync', function() {
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
 gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
   gulp.watch('./src/**/*.pug', ['html'])
-  gulp.watch('./src/sass/**/*.+(scss|sass)', ['styles'])
+  gulp.watch('./src/scss/**/*.+(scss|sass)', ['styles'])
   gulp.watch('./src/js/**/*.js', ['javascript'])
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
   gulp.watch('./src/other/**/*', ['copy-other'])

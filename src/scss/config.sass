@@ -7,19 +7,20 @@ $release: false
 $inlining: true
 
 // -- -- z-indexの管理 -- --
-$z-map: ()
+$z-map: header;
 
-@function z($name)
+@function z($name) 
   @return index($z-map, $name)
-
 // 使用例
 // z-index: z(header); // 1
 
-@function imageUrl 
-@if ($release and $inlining) 
-  @return "/img/"
-@else 
-  @return "../img/"
+
+// -- -- 画像パス -- --
+@function imageUrl
+  @if ($release and $inlining) 
+    @return "/img/";
+  @else
+    @return "../img/";
 
 // 使用例
 // .test {
