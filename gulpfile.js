@@ -114,10 +114,10 @@ gulp.task('html', function() {
 
   .pipe(fileinclude({
     prefix: '@@',
-    basepath: './dist/'
+    basepath: dest.root
   }))
 
-  // distディレクトリへの出力
+  // ディレクトリへの出力
   .pipe(gulp.dest(dest.root))
 
   // ブラウザの更新
@@ -158,7 +158,7 @@ gulp.task('styles', function() {
   }))
   // ソースマップの書き出し
   .pipe(gulpif(!isProduction, sourcemaps.write()))
-  .pipe(gulp.dest('dist/css/'))
+  .pipe(gulp.dest(dest.root+'css/'))
   .pipe(browserSync.reload({stream: true}))
 })
 
@@ -171,7 +171,7 @@ gulp.task('javascript', function(){
   .pipe(gulpif(isProduction, uglify()))
   // 全てのJSファイルをscriptファイル一つにまとめる。
   .pipe(concat('script.js'))
-  .pipe(gulp.dest('./dist/js'))
+    .pipe(gulp.dest(dest.root +'js'))
   .pipe(browserSync.reload({stream: true}))
 })
 
@@ -180,7 +180,7 @@ gulp.task('imagemin', function(){
   gulp.src(src.images)
 
   // 変更・追加されたファイルだけを圧縮&出力
-  .pipe(changed('./dist/'))
+    .pipe(changed(dest.root))
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
   .pipe(imagemin(
     [
@@ -215,14 +215,14 @@ gulp.task('imagemin', function(){
       imagemin.gifsicle()
     ]
   ))
-  .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest(dest.root))
   .pipe(browserSync.reload({stream: true}))
 })
 
 // その他ファイルのコピータスク
 gulp.task('copy-other', function(){
   gulp.src(src.other)
-  .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest(dest.root))
   .pipe(browserSync.reload({stream: true}))
 })
 
