@@ -171,7 +171,7 @@ gulp.task('javascript', function(){
   .pipe(gulpif(isProduction, uglify()))
   // 全てのJSファイルをscriptファイル一つにまとめる。
   .pipe(concat('script.js'))
-    .pipe(gulp.dest(dest.root +'js'))
+    .pipe(gulp.dest(dest.root +'js/'))
   .pipe(browserSync.reload({stream: true}))
 })
 

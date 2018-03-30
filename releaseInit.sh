@@ -1,7 +1,7 @@
 echo "本番環境用 Buildを実行中..."
-rm -rf dist/
+rm -rf dist
 
-echo "キャッシュをクリアをスキップしますか？ [yes/no]"
+echo "キャッシュクリアをスキップしますか？ [yes/no]"
 read Cacheclear
 case $Cacheclear in
   "" | "Y" | "y" | "yes" | "Yes" | "YES" );;
