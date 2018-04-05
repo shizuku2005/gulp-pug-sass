@@ -66,7 +66,7 @@ var gulp =  require('gulp')
 var src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
-  'styles': ['./src/sass/styles.sass'],
+  'styles': ['./src/sass/styles.+(sass|scss)'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
   'js': './src/js/**/*.js',
   'other': './src/other/**/*'
