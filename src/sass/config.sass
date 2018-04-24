@@ -1,6 +1,6 @@
 @charset "UTF-8"
 // -- -- z-indexの管理 -- --
-$z-map: header;
+$z-map: header
 
 @function z($name) 
   @return index($z-map, $name)
@@ -11,9 +11,9 @@ $z-map: header;
 // -- -- 画像パス -- --
 @function imageUrl
   @if ($env == "production") 
-    @return "/img/";
+    @return "/img/"
   @else
-    @return "../img/";
+    @return "../img/"
 
 // 使用例
 // .test
