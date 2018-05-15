@@ -1,0 +1,20 @@
+// -- -- z-indexの管理 -- --
+$z-map = header
+
+z($name) 
+  return index($z-map, $name)
+
+
+// -- -- 画像パス -- --
+imageUrl()
+  if ($env == "production") 
+    return "/img/"
+  else
+    return "../img/"
+
+// 使用例
+// .test
+//   background: url(imageUrl()+"test.jpg")
+// // もしくは
+//   +backgroundImg("test.jpg")
+// }

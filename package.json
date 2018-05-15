@@ -34,6 +34,7 @@
     "gulp-sass-glob": "^1.0.8",
     "gulp-sass-variables": "^1.1.1",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-stylus": "^2.7.0",
     "gulp-uglify": "^3.0.0",
     "imagemin-mozjpeg": "^7.0.0",
     "imagemin-pngquant": "^5.0.1",
@@ -42,5 +43,8 @@
     "path": "^0.12.7",
     "plumber": "^0.4.8",
     "yargs": "^11.0.0"
+  },
+  "dependencies": {
+    "sass2stylus": "^1.0.0"
   }
 }

@@ -1,0 +1,28 @@
+// 各ブラウザのcssハック用mixin
+
+// IE11
+HackIE11()
+  @media all and (-ms-high-contrast: none)
+    *::-ms-backdrop, &
+      {block}
+
+// EdgeHack
+HackEdge()
+  @supports (-ms-ime-align: auto)
+    &
+      {block}
+
+// Chromeハック ※適用未確認
+HackChrome()
+  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)
+    {block}
+
+// Firefoxハック
+HackFirefox()
+  @-moz-document url-prefix()
+    {block}
+
+// Safariハック
+HackSafari()
+  _::-webkit-full-page-media, _:future, :root &
+    {block}

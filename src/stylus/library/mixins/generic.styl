@@ -1,0 +1,58 @@
+// 汎用的なmixin集
+
+// media queryのタブレット以下の切り替え
+mediaqueryTablet()
+  @media screen and (max-width: 768px)
+    {block}
+
+// hover animationの定義 例では一般的な透明度の指定。SPではバグのような表示になりやすい為、必ず削除。
+hover()
+  transition: $transition
+  &:hover
+    opacity: .7
+
+  +mediaqueryTablet()
+    &:hover
+      opacity: 1
+
+// 背景のよく使われる上下真ん中寄せの設定
+backgroundImg($path, $position = center, $addpath = "")
+  background: url("{$addpath}" + imageUrl() + "{$path}")
+  background-size: cover
+  background-position: $position
+  background-repeat: no-repeat
+
+// borderで三角形を作る為のmixin。全8方向対応。初期値はてきとうなので、適宜引数を使用 ※適用未確認
+triangle($direction = "right", $width = 5px, $height = 5px, $color = #333)
+  if not index("up" "up-right" "right" "down-right" "down" "down-left" "left" "up-left", $direction)
+    error "Direction must be `up`, `up-right`, `right`, `down-right`, " + "`down`, `down-left`, `left` or `up-left`."
+  else if not _is-color($color)
+    error "`{$color}` is not a valid color for the `$color` argument in " + "the `triangle` mixin."
+  else
+    border-style: solid
+    height: 0
+    width: 0
+    if $direction == "up"
+      border-color: transparent transparent $color
+      border-width: 0 ($width / 2) $height
+    else if $direction == "up-right"
+      border-color: transparent $color transparent transparent
+      border-width: 0 $width $width 0
+    else if $direction == "right"
+      border-color: transparent transparent transparent $color
+      border-width: ($height / 2) 0 ($height / 2) $width
+    else if $direction == "down-right"
+      border-color: transparent transparent $color
+      border-width: 0 0 $width $width
+    else if $direction == "down"
+      border-color: $color transparent transparent
+      border-width: $height ($width / 2) 0
+    else if $direction == "down-left"
+      border-color: transparent transparent transparent $color
+      border-width: $width 0 0 $width
+    else if $direction == "left"
+      border-color: transparent $color transparent transparent
+      border-width: ($height / 2) $width ($height / 2) 0
+    else if $direction == "up-left"
+      border-color: $color transparent transparent
+      border-width: $width $width 0 0

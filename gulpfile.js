@@ -20,7 +20,9 @@ var gulp =  require('gulp')
   pug = require('gulp-pug')
 
   // sassのコンパイル
-  sass = require('gulp-sass')
+  // sass = require('gulp-sass')
+  // stylusのコンパイル
+  stylus = require('gulp-stylus');
   // ベンダープレフィックスの自動付与とcssの圧縮。オプション色々→ http://phiary.me/gulp-pleeease/#post-h3-id-0_0
   pleeease = require('gulp-pleeease')
   // sassのimportでワイルトカードを利用可能にするプラグイン
@@ -66,7 +68,7 @@ var gulp =  require('gulp')
 var src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
-  'styles': ['./src/sass/styles.+(sass|scss)'],
+  'styles': ['./src/stylus/styles.styl'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
   'js': './src/js/**/*.js',
   'other': './src/other/**/*'
@@ -140,9 +142,10 @@ gulp.task('styles', function() {
   // ソースマップを書き出す準備
   .pipe(gulpif(!isProduction, sourcemaps.init()))
 
-    .pipe(sassVariables({ $env: environment }))
+  // .pipe(sassVariables({ $env: environment }))
   // sassのコンパイル
-  .pipe(sass())
+  // .pipe(sass())
+  .pipe(stylus())
 
   // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
   .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
@@ -239,7 +242,7 @@ gulp.task('browser-sync', function() {
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
 gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
   gulp.watch('./src/**/*.pug', ['html'])
-  gulp.watch('./src/sass/**/*.+(scss|sass)', ['styles'])
+  gulp.watch('./src/sass/**/*.styl', ['styles'])
   gulp.watch('./src/js/**/*.js', ['javascript'])
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
   gulp.watch('./src/other/**/*', ['copy-other'])

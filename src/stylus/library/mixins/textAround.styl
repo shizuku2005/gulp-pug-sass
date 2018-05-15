@@ -1,0 +1,104 @@
+// テキスト周り用mixin
+
+// ol>liタグなどで、自動的に要素に順番に番号を振っていく。dl>dtなどにも使える。
+// beforeとafter
+// $counterStyle に関しては様々な値が用意されている。
+//
+//  ・circle - 白丸
+//  ・cjk-ideographic - 漢数字
+//  ・decimal-leading-zero - 先頭に0をつけた算用数字 (01, 02, 03, 等)
+//  ・hiragana - ひらがな あいうえお順
+//  ・hiragana-iroha - ひらがな いろは順
+//  ・katakana - カタカナ アイウエオ順
+//  ・katakana-iroha - カタカナ イロハ順
+//  ・lower-alpha - 小文字のアルファベット (a, b, c, d, e 等)
+//  ・lower-roman - T小文字のローマ数字 (i, ii, iii, iv, v 等)
+//  ・upper-alpha - 大文字のアルファベット (A, B, C, D, E 等)
+//  ・upper-roman - 大文字のローマ数字 (I, II, III, IV, V 等)
+//  他にもいくつかあるが、恐らく使わない為、省略
+autoNumbering($incrementer = items, $target = "li", $shifter = true, $fontSize = inherit, $startText = "", $endText = ".", $space = 20px, $topPosition = 0, $leftPosition = 0, $counterType = decimal, $startNumber = 0, $increase = 1, $beforeOrAfter = before)
+  counter-reset: $incrementer $startNumber
+
+  > {$target}
+    if $beforeOrAfter == before
+      if $shifter
+        position: relative
+        padding-left: $space
+
+      &::before
+        font-size: $fontSize
+        counter-increment: $incrementer $increase
+        content: $startText counter($incrementer, $counterType) $endText
+
+        if $shifter
+          position: absolute
+          top: $topPosition
+          left: $leftPosition
+        else
+          margin-right: $space
+
+    if $beforeOrAfter == after
+      &::after
+        font-size: $fontSize
+        counter-increment: $incrementer $increase
+        content: $startText counter($incrementer, $counterType) $endText
+
+        margin-left: $space
+
+// アンチエイリアス
+antialiased()
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+// 文字にグラデーション
+gradientText($angle = 45deg, $color = #f00, $amount = 50%)
+  color: $color
+  background: -webkit-linear-gradient($angle, $color, adjust-hue($color, $amount))
+  -webkit-text-fill-color: transparent
+  -webkit-background-clip: text
+
+// 単数行三点リーダ
+ellipsis($width = 100%)
+  width: $width
+  max-width: 100%
+  display: block
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+// 複数行三点リーダ スタイルによっては上手くいかないので、引数など上手く使い調整する
+multilineEllipsis($fontSize = 14px, $lineHeight = 1.3, $lines = 2, $bg = #fff)
+  // Reset
+  overflow: hidden
+  width: 100%
+  text-align: justify
+  > p:first-child
+    font-size: $fontSize
+    height: $fontSize * $lineHeight * $lines
+    line-height: $lineHeight
+    overflow: hidden
+    position: relative
+    &::before,
+    &::after
+      position: absolute
+
+    &::before
+      content: "..."
+      top: $fontSize * $lineHeight * ($lines - 1)
+      right: 0
+      background: $bg
+      padding-left: .1em
+      box-shadow: $bg -3px 0 5px 0px
+    &::after
+      content: ""
+      height: 100%
+      width: 100%
+      background: $bg
+      transform: skew(-50deg) translateX(-0.05em)
+
+  +mediaqueryTablet()
+    > p
+      &::before
+        box-shadow: $bg -2px 0 3px 0px
+      &::after
+        transform: skew(-50deg) translateX(-0.2em)
