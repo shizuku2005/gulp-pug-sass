@@ -59,7 +59,9 @@ var gulp =  require('gulp')
   // https://www.npmjs.com/package/gulp-file-include
   fileinclude = require('gulp-file-include')
   // コマンドにオプションを指定する。
-  yargs = require('yargs').argv;
+  yargs = require('yargs').argv
+  // ファイル変更や、追加をgulpで検知する
+  watch = require("gulp-watch");
 
 
 // 開発用ディレクトリの指定
@@ -238,11 +240,11 @@ gulp.task('browser-sync', function() {
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
 gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
-  gulp.watch('./src/**/*.pug', ['html'])
-  gulp.watch('./src/sass/**/*.+(scss|sass)', ['styles'])
-  gulp.watch('./src/js/**/*.js', ['javascript'])
-  gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
-  gulp.watch('./src/other/**/*', ['copy-other'])
+  watch(['./src/**/*.pug'], function () { gulp.start('html')});
+  watch(['./src/sass/**/*.+(scss|sass)'], function () { gulp.start('styles')});
+  watch(['./src/js/**/*.js'], function () { gulp.start('javascript')});
+  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], function () { gulp.start('imagemin')});
+  watch(['./src/other/**/*'], function () { gulp.start('copy-other')});
 })
 
 // ビルドタスクの設定。gulp buildを実行した時。
