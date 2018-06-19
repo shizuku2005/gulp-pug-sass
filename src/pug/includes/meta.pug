@@ -78,18 +78,13 @@ block head
   //- cssの読み込み
   //- リリース時はインラインCSSにする。
   block css
-    if page.path
-      if environment == "development" || !inlining
-        link(rel="stylesheet", href=page.path+"css/styles.css")
-      else if environment == "production" && inlining
-        style.
-          @@include(page.path+"css/styles.css")
-    else
-      if environment == "development" || !inlining
-        link(rel="stylesheet", href="css/styles.css")
-      else if environment == "production" && inlining
-        style.
-          @@include("css/styles.css")
+    - var pagePath = page.path || ""
+
+    if environment == "development" || !inlining
+      link(rel="stylesheet", href=pagePath+readingCssUrl)
+    else if environment == "production" && inlining
+      style.
+        @@include(pagePath+readingCssUrl)
     
   if environment == "development" || page.noindex == 'yes'
     meta(name="robots" content="noindex")
