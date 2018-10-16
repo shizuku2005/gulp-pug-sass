@@ -22,7 +22,7 @@ var gulp =  require('gulp')
   // sassのコンパイル
   // sass = require('gulp-sass')
   // stylusのコンパイル
-  stylus = require('gulp-stylus');
+  stylus = require('gulp-stylus')
   // ベンダープレフィックスの自動付与とcssの圧縮。オプション色々→ http://phiary.me/gulp-pleeease/#post-h3-id-0_0
   pleeease = require('gulp-pleeease')
   // sassのimportでワイルトカードを利用可能にするプラグイン
@@ -30,7 +30,7 @@ var gulp =  require('gulp')
   // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
   sourcemaps = require('gulp-sourcemaps')
   // 環境ごとの変数の値を変える
-  sassVariables = require('gulp-sass-variables'),
+  sassVariables = require('gulp-sass-variables')
 
   // javascriptの圧縮
   uglify = require('gulp-uglify')
@@ -132,10 +132,6 @@ gulp.task('styles', function() {
   .src(src.styles)
   // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
   // .pipe(cache('styles'))
-
-  // ワイルドカードでsassのincludeが実現できる。@import "partials/*";など
-  // 上手く行かず...解消したい。
-  // .pipe(glob())
 
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
