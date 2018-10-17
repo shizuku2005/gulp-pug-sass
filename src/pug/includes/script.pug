@@ -1,12 +1,7 @@
-if page.path
-  if environment == "development" || !inlining
-    script(src=page.path+"js/script.js")
-  else if environment == "production" && inlining
-    script.
-      @@include(page.path+"js/script.js")
-else
-  if environment == "development" || !inlining
-    script(src="js/script.js")
-  else if environment == "production" && inlining
-    script.
-      @@include("js/script.js")
+- var pagePath = page.path || ""
+
+if environment == "development" || !inlining
+  script(src=pagePath+readingJsUrl)
+else if environment == "production" && inlining
+  script.
+    @@include(pagePath+readingJsUrl)
