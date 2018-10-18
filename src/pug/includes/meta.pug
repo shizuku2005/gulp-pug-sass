@@ -1,8 +1,8 @@
 block head
   meta(charset="utf-8")
-  meta(http-equiv="X-UA-Compatible", content="IE=edge")
-  meta(name="viewport", content="width=device-width, initial-scale=1.0")
-  meta(name="format-detection", content="telephone=no")
+  meta(http-equiv="X-UA-Compatible" content="IE=edge")
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  meta(name="format-detection" content="telephone=no")
 
   //- ページタイトル
   if page.title
@@ -13,61 +13,48 @@ block head
   //- ページディスクリプション
   if page.description
     meta(name="description" content=page.description)
-  else if key == "index"
+  else if key === "index"
     meta(name="description" content=siteDescription)
   
   
   //- ページOGP用タイトル
   if page.ogTitle
-    meta(content=page.ogTitle + ' | ' + siteName property="og:title")
+    meta(property="og:title" content=page.ogTitle + ' | ' + siteName)
+  else if page.title
+    meta(property="og:title" content=page.title + ' | ' + siteName)
   else
-    meta(content=siteName property="og:title")
+    meta(property="og:title" content=siteName)
   
   //- ページOGP用説明文
   if page.ogDescription
-    meta(content=page.ogDescription property="og:description")
+    meta(property="og:description" content=page.ogDescription)
+  else if page.description
+    meta(property="og:description" content=page.description)
   else
-    meta(content=siteDescription, property="og:description")
+    meta(property="og:description" content=siteDescription)
   
   //-  ページのタイプ（OGP）トップページはwebsiteなど。それ以下はarticle
-  meta(content=(key == "index" ? "website" : "article"), property="og:type")
+  meta(property="og:type" content=(key === "index" ? "website" : "article"))
   
   //- ページOGPURL
-  if environment == "development"
-    meta(content=testingDomain+page.name+".html", property="og:url")
+  if key === "index"
+    meta(property="og:url" content=(environment === "development" ? testingDomain : domain))
   else
-    meta(content=domain+page.name+".html", property="og:url")
-  
+    meta(property="og:url" content=(environment === "development" ? testingDomain : domain)+page.name+".html")
+
   //- サイトの名前 OGP
-  meta(content=siteName property="og:site_name")
+  meta(property="og:site_name" content=siteName)
   
   //- サイトのOGP画像
-  if environment == "development"
-    if page.ogImage
-      meta(content=testingDomain+page.ogImage, property="og:image")
-    else 
-      meta(content=testingDomain+siteOgImage, property="og:image")
-  else
-    if page.ogImage
-      meta(content=domain+page.ogImage, property="og:image")
-    else 
-      meta(content=domain+siteOgImage, property="og:image")
+  - var ogpImage = page.ogImage || siteOgImage
+  meta(property="og:image" content=(environment === "development" ? testingDomain : domain)+ogpImage)
   
   //- Twitterでの画像の表示のされ方
   meta(name="twitter:card" content="summary")
   
   //- Twitterで表示させる画像。
-  if environment == "development"
-    if page.ogImage
-      meta(name="twitter:image:src" content=testingDomain+page.ogImage)
-    else
-      meta(name="twitter:image:src" content=testingDomain+siteOgImage)
-  else
-    if page.ogImage
-      meta(name="twitter:image:src" content=domain+page.ogImage)
-    else
-      meta(name="twitter:image:src" content=domain+siteOgImage)
-  
+  meta(name="twitter:image:src" content=(environment === "development" ? testingDomain : domain)+ogpImage)
+
   //- 64pxと180pxの正方形のアイコンをそれぞれ以下のファイル名にし、imgディレクトリに設置する。
   //- 詳細はREADME
   if faviconUrl
@@ -75,15 +62,14 @@ block head
   if iconUrl
     link(rel="apple-touch-icon" href=iconUrl sizes="180x180")
 
-  //- cssの読み込み
   //- リリース時はインラインCSSにする。
   block css
     - var pagePath = page.path || ""
-    if environment == "development" || !inlining
+    if environment === "development" || !inlining
       link(rel="stylesheet" href=pagePath+readingCssUrl)
-    else if environment == "production" && inlining
+    else if environment === "production" && inlining
       style.
         @@include(pagePath+readingCssUrl)
     
-  if environment == "development" || page.noindex == 'yes'
+  if environment === "development" || page.noindex === 'yes'
     meta(name="robots" content="noindex")
