@@ -238,7 +238,7 @@ gulp.task('browser-sync', function() {
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
 gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
   gulp.watch('./src/**/*.pug', ['html'])
-  gulp.watch('./src/sass/**/*.styl', ['styles'])
+  gulp.watch('./src/stylus/**/*.styl', ['styles'])
   gulp.watch('./src/js/**/*.js', ['javascript'])
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['imagemin'])
   gulp.watch('./src/other/**/*', ['copy-other'])
