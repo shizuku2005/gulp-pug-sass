@@ -57,14 +57,14 @@ block head
 
   //- 64pxと180pxの正方形のアイコンをそれぞれ以下のファイル名にし、imgディレクトリに設置する。
   //- 詳細はREADME
+  - var pagePath = page.path || ""
   if faviconUrl
-    link(rel="icon" href=faviconUrl type="image/x-icon")
+    link(rel="icon" href=pagePath+faviconUrl type="image/x-icon")
   if iconUrl
-    link(rel="apple-touch-icon" href=iconUrl sizes="180x180")
+    link(rel="apple-touch-icon" href=pagePath+iconUrl sizes="180x180")
 
   //- リリース時はインラインCSSにする。
   block css
-    - var pagePath = page.path || ""
     if environment === "development" || !inlining
       link(rel="stylesheet" href=pagePath+readingCssUrl)
     else if environment === "production" && inlining
