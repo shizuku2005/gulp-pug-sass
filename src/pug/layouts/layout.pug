@@ -1,15 +1,15 @@
-include ../mixins/generic.pug
+include ../mixins/generic
 
 doctype html
 block vars
-  include ../data.pug
+  include ../data
 html(lang="ja" dir="ltr")
   head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# " + (key == "index" ? "website" : "article") + ": http://ogp.me/ns/" + (key == "index" ? "website" : "article") + "#")
-    include ../includes/meta.pug
+    include ../includes/meta
       
   body
-    include ../includes/header.pug
+    include ../includes/header
     block contents
-    include ../includes/footer.pug
-    include ../includes/script.pug
+    include ../includes/footer
+    include ../includes/script
     
