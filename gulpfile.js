@@ -21,14 +21,16 @@ var gulp =  require('gulp')
 
   // sassのコンパイル
   sass = require('gulp-sass')
-  // ベンダープレフィックスの自動付与とcssの圧縮。オプション色々→ http://phiary.me/gulp-pleeease/#post-h3-id-0_0
-  pleeease = require('gulp-pleeease')
+  // ベンダープレフィックスの自動付与。
+  autoprefixer = require('gulp-autoprefixer')
   // sassのimportでワイルトカードを利用可能にするプラグイン
   glob = require('gulp-sass-glob')
   // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
   sourcemaps = require('gulp-sourcemaps')
   // 環境ごとの変数の値を変える
   sassVariables = require('gulp-sass-variables'),
+  // cssの圧縮
+  cleanCSS = require('gulp-clean-css'),
 
   // javascriptの圧縮
   uglify = require('gulp-uglify')
@@ -150,14 +152,15 @@ gulp.task('styles', function() {
   .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
   .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
 
-  // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
-  .pipe(pleeease({
-
-    // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。他の書き方はgulp-pleeeaseのオプションの書き方を調べるべし
+    // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
+  .pipe(autoprefixer({
+    // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
     browsers: ['last 2 version'],
-    // cssの圧縮を(trueで)有効化
-    "minifier": isProduction
+    grid: true
   }))
+  // cssの圧縮を(trueで)有効化
+  .pipe(gulpif(isProduction, cleanCSS()))
+
   // ソースマップの書き出し
   .pipe(gulpif(!isProduction, sourcemaps.write()))
   .pipe(gulp.dest(dest.root+'css/'))
