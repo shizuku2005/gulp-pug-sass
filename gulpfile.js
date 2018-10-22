@@ -126,11 +126,12 @@ gulp.task('html', function() {
   .pipe(browserSync.reload({stream: true}))
 })
 
-// sassのコンパイルなど
+var env = environment;
+// stylusのコンパイルなど
 gulp.task('styles', function() {
   return gulp
   .src(src.styles)
-  // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
+  // キャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
   // .pipe(cache('styles'))
 
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
@@ -138,10 +139,7 @@ gulp.task('styles', function() {
   // ソースマップを書き出す準備
   .pipe(gulpif(!isProduction, sourcemaps.init()))
 
-  // .pipe(sassVariables({ $env: environment }))
-  // sassのコンパイル
-  // .pipe(sass())
-  .pipe(stylus())
+  .pipe(stylus({define:{env}}))
 
   // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
   .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
