@@ -15,14 +15,14 @@
 /* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
 // gulpプラグインの読み込み
-var gulp =  require('gulp')
+let gulp =  require('gulp')
   // pugのコンパイル
   pug = require('gulp-pug')
 
   // stylusのコンパイル
   stylus = require('gulp-stylus')
-  // ベンダープレフィックスの自動付与とcssの圧縮。オプション色々→ http://phiary.me/gulp-pleeease/#post-h3-id-0_0
-  pleeease = require('gulp-pleeease')
+  // ベンダープレフィックスの自動付与。
+  autoprefixer = require('gulp-autoprefixer')
   // ソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
   sourcemaps = require('gulp-sourcemaps')
   // cssの圧縮
@@ -61,7 +61,7 @@ var gulp =  require('gulp')
 
 
 // 開発用ディレクトリの指定
-var src = {
+let src = {
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
   'styles': ['./src/stylus/styles.styl'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
@@ -70,13 +70,13 @@ var src = {
 }
 
 // 出力ディレクトリの指定
-var dest = {
+let dest = {
   'root': './dist/'
 }
 
-var isProduction = (yargs.env === 'production') ? true : false;
-var environment = (yargs.env === 'production') ? 'production' : 'development';
-var inlining = (yargs.inline === 'true') ? true : false;
+let isProduction = (yargs.env === 'production') ? true : false;
+let environment = (yargs.env === 'production') ? 'production' : 'development';
+let inlining = (yargs.inline === 'true') ? true : false;
 
 gulp.task('test', function () {
   console.log(isProduction);
@@ -121,7 +121,7 @@ gulp.task('html', function() {
   .pipe(browserSync.reload({stream: true}))
 })
 
-var env = environment;
+let env = environment;
 // stylusのコンパイルなど
 gulp.task('styles', function() {
   return gulp
@@ -141,10 +141,10 @@ gulp.task('styles', function() {
   .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
 
   // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
-  .pipe(pleeease({
-    // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。他の書き方はgulp-pleeeaseのオプションの書き方を調べるべし
+  .pipe(autoprefixer({
+    // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
     browsers: ['last 2 version'],
-    "minifier": false
+    grid: true
   }))
   // cssの圧縮を(trueで)有効化
   .pipe(gulpif(isProduction, cleanCSS()))
@@ -163,7 +163,7 @@ gulp.task('javascript', function(){
   .pipe(gulpif(isProduction, uglify()))
   // 全てのJSファイルをscriptファイル一つにまとめる。
   .pipe(concat('script.js'))
-    .pipe(gulp.dest(dest.root +'js/'))
+  .pipe(gulp.dest(dest.root +'js/'))
   .pipe(browserSync.reload({stream: true}))
 })
 
@@ -172,7 +172,7 @@ gulp.task('imagemin', function(){
   gulp.src(src.images)
 
   // 変更・追加されたファイルだけを圧縮&出力
-    .pipe(changed(dest.root))
+  .pipe(changed(dest.root))
   .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
   .pipe(imagemin(
     [
@@ -207,14 +207,14 @@ gulp.task('imagemin', function(){
       imagemin.gifsicle()
     ]
   ))
-    .pipe(gulp.dest(dest.root))
+  .pipe(gulp.dest(dest.root))
   .pipe(browserSync.reload({stream: true}))
 })
 
 // その他ファイルのコピータスク
 gulp.task('copy-other', function(){
   gulp.src(src.other)
-    .pipe(gulp.dest(dest.root))
+  .pipe(gulp.dest(dest.root))
   .pipe(browserSync.reload({stream: true}))
 })
 
