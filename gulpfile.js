@@ -8,7 +8,7 @@
 ・gulp.src("取得するファイル")
 タスクの対象となるファイルを取得します。複数のファイルも指定できます
 ・pipe()
-一つ一つの処理をつなげます。例えば、src()で取得したSassファイルをコンパイルし、それをgulp.dest()で書き出します。pipe()メソッドはいくらでもつなげることができるので、連続した複数の処理を実装できます
+一つ一つの処理をつなげます。例えば、src()で取得したStylusファイルをコンパイルし、それをgulp.dest()で書き出します。pipe()メソッドはいくらでもつなげることができるので、連続した複数の処理を実装できます
 ・gulp.dest("保存先フォルダー")
 処理を行ったファイルを指定の場所に保存します
 
@@ -19,18 +19,14 @@ var gulp =  require('gulp')
   // pugのコンパイル
   pug = require('gulp-pug')
 
-  // sassのコンパイル
-  // sass = require('gulp-sass')
   // stylusのコンパイル
   stylus = require('gulp-stylus')
   // ベンダープレフィックスの自動付与とcssの圧縮。オプション色々→ http://phiary.me/gulp-pleeease/#post-h3-id-0_0
   pleeease = require('gulp-pleeease')
-  // sassのimportでワイルトカードを利用可能にするプラグイン
-  glob = require('gulp-sass-glob')
-  // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
+  // ソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
   sourcemaps = require('gulp-sourcemaps')
-  // 環境ごとの変数の値を変える
-  sassVariables = require('gulp-sass-variables')
+  // cssの圧縮
+  cleanCSS = require('gulp-clean-css')
 
   // javascriptの圧縮
   uglify = require('gulp-uglify')
@@ -66,7 +62,6 @@ var gulp =  require('gulp')
 
 // 開発用ディレクトリの指定
 var src = {
-  // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
   'styles': ['./src/stylus/styles.styl'],
   'images': ['./src/**/*.+(jpg|jpeg|png|gif|svg|ico)'],
@@ -147,12 +142,12 @@ gulp.task('styles', function() {
 
   // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
   .pipe(pleeease({
-
     // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。他の書き方はgulp-pleeeaseのオプションの書き方を調べるべし
     browsers: ['last 2 version'],
-    // cssの圧縮を(trueで)有効化
-    "minifier": isProduction
+    "minifier": false
   }))
+  // cssの圧縮を(trueで)有効化
+  .pipe(gulpif(isProduction, cleanCSS()))
   // ソースマップの書き出し
   .pipe(gulpif(!isProduction, sourcemaps.write()))
   .pipe(gulp.dest(dest.root+'css/'))
