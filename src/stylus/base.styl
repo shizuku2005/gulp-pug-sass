@@ -4,13 +4,13 @@ body
 
 a
   text-decoration: none
-  color: #000
+  color: $black
 
 *, *::before, *::after
   box-sizing: border-box
 
 // selectのスタイルリセット&統一。一般的なスタイルに全ブラウザ統一される。
-// ただ、DOMの構造を以下のsassの構造に合わせる必要がある。具体的にはselectWrapでselectを囲む。
+// ただ、DOMの構造を以下のスタイルの構造に合わせる必要がある。具体的にはselectWrapでselectを囲む。
 .selectWrap
   position: relative
   display: inline-block
@@ -41,11 +41,11 @@ a
     height: 0
     border-style: solid
     border-width: 4px 4px 0 4px
-    border-color: #000 transparent transparent transparent
+    border-color: $black transparent transparent transparent
 
 .spview
   display: none
-  color: #000
+  color: $black
 
 +mediaqueryTablet()
   .pcview

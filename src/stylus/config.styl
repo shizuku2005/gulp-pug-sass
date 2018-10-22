@@ -1,14 +1,14 @@
-// -- -- z-indexの管理 -- --
-$z-map = header
+// z-indexの管理
+$z-map = default, header
 
 z($name) 
   return index($z-map, $name)
 
 
-// -- -- 画像パス -- --
+// 画像パス
 imageUrl()
   if ($env == "production") 
-    return "/img/"
+    return "img/"
   else
     return "../img/"
 
@@ -16,5 +16,5 @@ imageUrl()
 // .test
 //   background: url(imageUrl()+"test.jpg")
 // // もしくは
-//   +backgroundImg("test.jpg")
+//   backgroundImg("test.jpg")
 // }
