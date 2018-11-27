@@ -15,59 +15,59 @@
 /* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
 // gulpプラグインの読み込み
-var gulp =  require('gulp')
-  // pugのコンパイル
-  pug = require('gulp-pug')
+let gulp =  require('gulp')
+    // pugのコンパイル
+    pug = require('gulp-pug')
 
-  // sassのコンパイル
-  sass = require('gulp-sass')
-  // ベンダープレフィックスの自動付与。
-  autoprefixer = require('gulp-autoprefixer')
-  // sassのimportでワイルトカードを利用可能にするプラグイン
-  glob = require('gulp-sass-glob')
-  // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
-  sourcemaps = require('gulp-sourcemaps')
-  // 環境ごとの変数の値を変える
-  sassVariables = require('gulp-sass-variables'),
-  // cssの圧縮
-  cleanCSS = require('gulp-clean-css'),
+    // sassのコンパイル
+    sass = require('gulp-sass')
+    // ベンダープレフィックスの自動付与。
+    autoprefixer = require('gulp-autoprefixer')
+    // sassのimportでワイルトカードを利用可能にするプラグイン
+    glob = require('gulp-sass-glob')
+    // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
+    sourcemaps = require('gulp-sourcemaps')
+    // 環境ごとの変数の値を変える
+    sassVariables = require('gulp-sass-variables'),
+    // cssの圧縮
+    cleanCSS = require('gulp-clean-css'),
 
-  // javascriptの圧縮
-  uglify = require('gulp-uglify')
-  // 複数のJSファイルを一つにまとめる
-  concat = require("gulp-concat")
+    // javascriptの圧縮
+    uglify = require('gulp-uglify')
+    // 複数のJSファイルを一つにまとめる
+    concat = require("gulp-concat")
 
-  // 画像の圧縮
-  imagemin = require('gulp-imagemin')
-  // pngの圧縮
-  pngquant = require("imagemin-pngquant")
-  // jpegの圧縮
-  mozjpeg = require('imagemin-mozjpeg')
+    // 画像の圧縮
+    imagemin = require('gulp-imagemin')
+    // pngの圧縮
+    pngquant = require("imagemin-pngquant")
+    // jpegの圧縮
+    mozjpeg = require('imagemin-mozjpeg')
 
-  // gulp実行時にブラウザを立ち上げる。
-  browserSync = require('browser-sync')
-  // エラーでgulpが止まるのを防ぐ
-  plumber = require('gulp-plumber')
-  // エラーのリアルタイム通知
-  notify = require("gulp-notify")
-  // gulpのキャッシュ
-  cache = require('gulp-cached')
-  // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われる。
-  changed = require('gulp-changed')
-  // if文を使えるようにする。
-  gulpif = require('gulp-if')
-  // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
-  // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
-  // https://www.npmjs.com/package/gulp-file-include
-  fileinclude = require('gulp-file-include')
-  // コマンドにオプションを指定する。
-  yargs = require('yargs').argv
-  // ファイル変更や、追加をgulpで検知する
-  watch = require("gulp-watch");
+    // gulp実行時にブラウザを立ち上げる。
+    browserSync = require('browser-sync')
+    // エラーでgulpが止まるのを防ぐ
+    plumber = require('gulp-plumber')
+    // エラーのリアルタイム通知
+    notify = require("gulp-notify")
+    // gulpのキャッシュ
+    cache = require('gulp-cached')
+    // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われる。
+    changed = require('gulp-changed')
+    // if文を使えるようにする。
+    gulpif = require('gulp-if')
+    // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
+    // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
+    // https://www.npmjs.com/package/gulp-file-include
+    fileinclude = require('gulp-file-include')
+    // コマンドにオプションを指定する。
+    yargs = require('yargs').argv
+    // ファイル変更や、追加をgulpで検知する
+    watch = require("gulp-watch");
 
 
 // 開発用ディレクトリの指定
-var src = {
+let src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
   'styles': ['./src/sass/styles.+(sass|scss)'],
@@ -77,162 +77,161 @@ var src = {
 }
 
 // 出力ディレクトリの指定
-var dest = {
+let dest = {
   'root': './dist/'
 }
 
-var isProduction = (yargs.env === 'production') ? true : false;
-var environment = (yargs.env === 'production') ? 'production' : 'development';
-var inlining = (yargs.inline === 'true') ? true : false;
+let isProduction = (yargs.env === 'production') ? true : false;
+let environment = (yargs.env === 'production') ? 'production' : 'development';
+let inlining = (yargs.inline === 'true') ? true : false;
 
-gulp.task('test', function () {
+gulp.task('test', () => {
   console.log(isProduction);
 });
 
 // pugのコンパイルなど
-gulp.task('html', function() {
+gulp.task('html', () =>  {
 
   // pugファイルの読み込み
-  gulp.src(src.html)
+  return gulp.src(src.html)
 
-  // pugファイルが増えてきて、コンパイル速度が落ちてきたら、以下の行のコメントアウトを外すべし。ただし、注意書き（このファイルの上部に記載）を読んで注意すること。
-  // .pipe(cache('html'))
+    // pugファイルが増えてきて、コンパイル速度が落ちてきたら、以下の行のコメントアウトを外すべし。ただし、注意書き（このファイルの上部に記載）を読んで注意すること。
+    // .pipe(cache('html'))
 
-  // 別途 Watchタスク（一番下の方）からこのタスクを呼んだ時に、ビルドエラーで Watch タスクを終了させないようにしている。
-  .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+    // 別途 Watchタスク（一番下の方）からこのタスクを呼んだ時に、ビルドエラーで Watch タスクを終了させないようにしている。
+    .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
-  // pugのコンパイル
-  .pipe(pug({
+    // pugのコンパイル
+    .pipe(pug({
 
-    // Pugファイルのルートディレクトリを指定。
-    // `/_includes/_layout`のようにルート相対パスで指定することができる。
-    basedir: 'src/pug/pages',
-    locals: {
-      environment: environment,
-      inlining: inlining
-    },
+      // Pugファイルのルートディレクトリを指定。
+      // `/_includes/_layout`のようにルート相対パスで指定することができる。
+      basedir: 'src/pug/pages',
+      locals: {
+        environment: environment,
+        inlining: inlining
+      },
 
-    // Pugファイルの整形。圧縮する場合はfalse
-    pretty: !isProduction
-  }))
+      // Pugファイルの整形。圧縮する場合はfalse
+      pretty: !isProduction
+    }))
 
-  .pipe(fileinclude({
-    prefix: '@@',
-    basepath: dest.root
-  }))
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: dest.root
+    }))
 
-  // ディレクトリへの出力
-  .pipe(gulp.dest(dest.root))
+    // ディレクトリへの出力
+    .pipe(gulp.dest(dest.root))
 
-  // ブラウザの更新
-  .pipe(browserSync.reload({stream: true}))
+    // ブラウザの更新
+    .pipe(browserSync.reload({stream: true}))
 })
 
 // sassのコンパイルなど
-gulp.task('styles', function() {
-  return gulp
-  .src(src.styles)
-  // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
-  // .pipe(cache('styles'))
+gulp.task('styles', () =>  {
+  return gulp.src(src.styles)
+    // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
+    // .pipe(cache('styles'))
 
-  // ワイルドカードでsassのincludeが実現できる。@import "partials/*";など
-  // 上手く行かず...解消したい。
-  // .pipe(glob())
+    // ワイルドカードでsassのincludeが実現できる。@import "partials/*";など
+    // 上手く行かず...解消したい。
+    // .pipe(glob())
 
-  .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+    .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
-  // ソースマップを書き出す準備
-  .pipe(gulpif(!isProduction, sourcemaps.init()))
+    // ソースマップを書き出す準備
+    .pipe(gulpif(!isProduction, sourcemaps.init()))
 
     .pipe(sassVariables({ $env: environment }))
-  // sassのコンパイル
-  .pipe(sass())
+    // sassのコンパイル
+    .pipe(sass())
 
-  // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
-  .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
-  .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
+    // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
+    .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
+    .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
 
-    // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
-  .pipe(autoprefixer({
-    // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
-    browsers: ['last 2 version'],
-    grid: true
-  }))
-  // cssの圧縮を(trueで)有効化
-  .pipe(gulpif(isProduction, cleanCSS()))
+      // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
+    .pipe(autoprefixer({
+      // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
+      browsers: ['last 2 version'],
+      grid: true
+    }))
+    // cssの圧縮を(trueで)有効化
+    .pipe(gulpif(isProduction, cleanCSS()))
 
-  // ソースマップの書き出し
-  .pipe(gulpif(!isProduction, sourcemaps.write()))
-  .pipe(gulp.dest(dest.root+'css/'))
-  .pipe(browserSync.reload({stream: true}))
+    // ソースマップの書き出し
+    .pipe(gulpif(!isProduction, sourcemaps.write()))
+    .pipe(gulp.dest(dest.root+'css/'))
+    .pipe(browserSync.reload({stream: true}))
 })
 
 // javascriptの圧縮
-gulp.task('javascript', function(){
-  gulp.src(src.js)
-  .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+gulp.task('javascript', () => {
+  return gulp.src(src.js)
+    .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
-  // JSの圧縮
-  .pipe(gulpif(isProduction, uglify()))
-  // 全てのJSファイルをscriptファイル一つにまとめる。
-  .pipe(concat('script.js'))
+    // JSの圧縮
+    .pipe(gulpif(isProduction, uglify()))
+    // 全てのJSファイルをscriptファイル一つにまとめる。
+    .pipe(concat('script.js'))
     .pipe(gulp.dest(dest.root +'js/'))
-  .pipe(browserSync.reload({stream: true}))
+    .pipe(browserSync.reload({stream: true}))
 })
 
 // 画像の圧縮
-gulp.task('imagemin', function(){
-  gulp.src(src.images)
+gulp.task('imagemin', () => {
+  return gulp.src(src.images)
 
   // 変更・追加されたファイルだけを圧縮&出力
     .pipe(changed(dest.root))
-  .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-  .pipe(imagemin(
-    [
-      // pngの圧縮
-      pngquant({
+    .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+    .pipe(imagemin(
+      [
+        // pngの圧縮
+        pngquant({
 
-        // 圧縮率の指定
-        quality: '65-80',
+          // 圧縮率の指定
+          quality: '65-80',
 
-        // 圧縮スピードの指定。1が一番遅いが、圧縮率が高い。
-        speed: 1,
+          // 圧縮スピードの指定。1が一番遅いが、圧縮率が高い。
+          speed: 1,
 
-        // ディザ処理をOFF。画像の圧縮方式。
-        floyd:0
-      }),
+          // ディザ処理をOFF。画像の圧縮方式。
+          floyd:0
+        }),
 
-      // pngquantでpng画像が暗くなってしまうバグを防ぐ
-      imagemin.optipng(),
+        // pngquantでpng画像が暗くなってしまうバグを防ぐ
+        imagemin.optipng(),
 
-      // jpgの圧縮
-      mozjpeg({
-        quality:85,
+        // jpgの圧縮
+        mozjpeg({
+          quality:85,
 
-        // プログレッシブjpegの設定。画像圧縮方式JPEG形式の拡張仕様の1種。
-        progressive: true
-      }),
+          // プログレッシブjpegの設定。画像圧縮方式JPEG形式の拡張仕様の1種。
+          progressive: true
+        }),
 
-      // svgの圧縮
-      imagemin.svgo(),
+        // svgの圧縮
+        imagemin.svgo(),
 
-      // gifの圧縮
-      imagemin.gifsicle()
-    ]
-  ))
+        // gifの圧縮
+        imagemin.gifsicle()
+      ]
+    ))
     .pipe(gulp.dest(dest.root))
-  .pipe(browserSync.reload({stream: true}))
+    .pipe(browserSync.reload({stream: true}))
 })
 
 // その他ファイルのコピータスク
-gulp.task('copy-other', function(){
-  gulp.src(src.other)
+gulp.task('copy-other', () => {
+  return gulp.src(src.other)
     .pipe(gulp.dest(dest.root))
-  .pipe(browserSync.reload({stream: true}))
+    .pipe(browserSync.reload({stream: true}))
 })
 
 // gulp実行時にサーバーを立ち上げ、デフォルトブラウザの新しいタブでWebページを表示する。
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', () =>  {
   browserSync({
     server: {
       baseDir: dest.root,
@@ -242,13 +241,13 @@ gulp.task('browser-sync', function() {
 })
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
-gulp.task('default', ['html','styles','javascript','imagemin','copy-other','browser-sync'], function () {
-  watch(['./src/**/*.pug'], function () { gulp.start('html')});
-  watch(['./src/sass/**/*.+(scss|sass)'], function () { gulp.start('styles')});
-  watch(['./src/js/**/*.js'], function () { gulp.start('javascript')});
-  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], function () { gulp.start('imagemin')});
-  watch(['./src/other/**/*'], function () { gulp.start('copy-other')});
+gulp.task('default', gulp.series(gulp.parallel('html', 'styles', 'javascript', 'imagemin', 'copy-other', 'browser-sync')), () => {
+  watch(['./src/**/*.pug'], gulp.series('html'));
+  watch(['./src/sass/**/*.+(scss|sass)'], gulp.series('styles'));
+  watch(['./src/js/**/*.js'], gulp.series('javascript'));
+  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], gulp.series('imagemin'));
+  watch(['./src/other/**/*'], gulp.series('copy-other'));
 })
 
 // ビルドタスクの設定。gulp buildを実行した時。
-gulp.task('build', ['html','styles','javascript','imagemin','copy-other'])
+gulp.task('build', gulp.series( gulp.parallel('html','styles','javascript','imagemin','copy-other')))
