@@ -136,9 +136,8 @@ gulp.task('styles', () =>  {
 
     .pipe(stylus({define:{env}}))
 
-    // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
-    .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
-    .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
+    // ソースマップの書き出し
+    .pipe(gulpif(!isProduction, sourcemaps.write()))
 
     // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
     .pipe(autoprefixer({
@@ -149,7 +148,6 @@ gulp.task('styles', () =>  {
     // cssの圧縮を(trueで)有効化
     .pipe(gulpif(isProduction, cleanCSS()))
     // ソースマップの書き出し
-    .pipe(gulpif(!isProduction, sourcemaps.write()))
     .pipe(gulp.dest(dest.root+'css/'))
     .pipe(browserSync.reload({stream: true}))
 })
