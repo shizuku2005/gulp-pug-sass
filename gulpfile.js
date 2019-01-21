@@ -79,8 +79,9 @@ let isProduction = (yargs.env === 'production') ? true : false;
 let environment = (yargs.env === 'production') ? 'production' : 'development';
 let inlining = (yargs.inline === 'true') ? true : false;
 
-gulp.task('environment', () =>  {
-  console.log(environment);
+gulp.task('environment', (done) =>  {
+  console.log('environment:'+environment);
+  done();
 });
 
 // pugのコンパイルなど
@@ -228,13 +229,13 @@ gulp.task('browser-sync', () =>  {
 })
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
-gulp.task('default', gulp.series(gulp.parallel('html','styles','javascript','imagemin','copy-other','browser-sync')), () =>  {
+gulp.task('default', gulp.parallel(gulp.series('html','styles','javascript','imagemin','copy-other','browser-sync'), () =>  {
   gulp.watch('./src/**/*.pug', gulp.series('html'))
   gulp.watch('./src/stylus/**/*.styl', gulp.series('styles'))
   gulp.watch('./src/js/**/*.js', gulp.series('javascript'))
   gulp.watch('./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)', gulp.series('imagemin'))
   gulp.watch('./src/other/**/*', gulp.series('copy-other'))
-})
+}))
 
 // ビルドタスクの設定。gulp buildを実行した時。
 gulp.task('build', gulp.series(gulp.parallel('html','styles','javascript','imagemin','copy-other')))
