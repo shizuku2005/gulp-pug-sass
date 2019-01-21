@@ -5,7 +5,7 @@
 オープンにすることで、スクール以外の方にも有効に使ってもらえるようにしています。
 初心者が使うことを想定しているので、このREADMEとgulpfile.js、それぞれのファイルには細かいメモや説明などが記載されています。
 基本的にフリーなものですが、このリポジトリ自体を使った商用的な利用や、２次配布などはやめてください。
-利用するときなどは、（以下SNSなどで良いので）一言連絡頂けると飛び上がって喜びますので、よろしくお願いします。
+利用するときなどは、（以下SNSなどで）一言連絡頂ければ幸いです。
 
 製作者Webページ
 https://kazuma-takeda.com/
@@ -20,7 +20,7 @@ https://qiita.com/hbsnow/items/8eb7009b3ed716bc48a4#gulp-cached-gulp-changed
 - 新しくgulpのプラグインを追加するときは、以下のブラックリストに入っていないか確認し、入っていた場合は、注意する。理由を調べるなど。また、同じようなプラグインがいくつかある場合があるので、追加する際は調べる。
 https://github.com/gulpjs/plugins/blob/master/src/blackList.json
 - gulp-sass-globという、sassのimportでワイルトカードを利用可能にするプラグインがあるが、上手くいかないので、そのうち解消したい。。。参考サイト → https://www.nxworld.net/services-resource/gulp-plugin-gulp-sass-glob.html
-  stylusへの移行を考えているので、その場合は解消される見込み。
+  stylusを使用すればデフォルトで使用できる。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -28,7 +28,7 @@ https://github.com/gulpjs/plugins/blob/master/src/blackList.json
 - gulp
   ルートディレクトリでこのコマンドを打つと、ローカルサーバーが立ち上がり、ブラウザのタブが新たに開かれ、dist/index.htmlが表示される。表示されない場合はブラウザリロードする。ファイルの監視も行われる。中止したい場合は`control + c`コマンド
 - gulp build
-  ビルドコマンド。
+  ビルドコマンド。サーバーを立ち上げたくないが、buildしたいときに有効
 - gulp html|styles|javascript|imagemin...
   それぞれに定義されたタスクを叩く。
 
@@ -42,14 +42,17 @@ https://github.com/gulpjs/plugins/blob/master/src/blackList.json
 実際にいじるファイル群。
 
 - gulpfile.js
-実際にgulpにさせるタスクの設定を書くファイル。
+gulpにやらせるタスクの設定を書くファイル。
 
 - package.json, package-lock.json
 gulpのプラグインのバージョン管理。
 
+- node_modules
+node.jsの本体とプラグインが格納されている。
+
 - cacheClear.sh
 うまくコンパイル出来ない時に使うシェル。
-gulpにキャッシュが溜まった時、pugやsassがうまくコンパイルされない時があるので、このシェルを実行し、リセットする。それでも上手くいかない場合は調べる。
+gulpにキャッシュが溜まった時、pugやsassがうまくコンパイルされない時があるので、このシェルを実行し、リセットする。
 
 - releaseInit.sh
 本番環境適用時に実行するシェル。
