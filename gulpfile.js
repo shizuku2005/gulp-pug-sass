@@ -85,8 +85,9 @@ let isProduction = (yargs.env === 'production') ? true : false;
 let environment = (yargs.env === 'production') ? 'production' : 'development';
 let inlining = (yargs.inline === 'true') ? true : false;
 
-gulp.task('test', () => {
-  console.log(isProduction);
+gulp.task('test', (done) => {
+  console.log('isProduction:'+isProduction);
+  done();
 });
 
 // pugのコンパイルなど
@@ -241,13 +242,13 @@ gulp.task('browser-sync', () =>  {
 })
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
-gulp.task('default', gulp.series(gulp.parallel('html', 'styles', 'javascript', 'imagemin', 'copy-other', 'browser-sync')), () => {
-  watch(['./src/**/*.pug'], gulp.series('html'));
-  watch(['./src/sass/**/*.+(scss|sass)'], gulp.series('styles'));
-  watch(['./src/js/**/*.js'], gulp.series('javascript'));
-  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], gulp.series('imagemin'));
-  watch(['./src/other/**/*'], gulp.series('copy-other'));
-})
+gulp.task('default', gulp.parallel(gulp.series('html', 'styles', 'javascript', 'imagemin', 'copy-other', 'browser-sync'), function () {
+  watch(['./src/**/*.pug'], gulp.task('html'));
+  watch(['./src/sass/**/*.+(scss|sass)'], gulp.task('styles'));
+  watch(['./src/js/**/*.js'], gulp.task('javascript'));
+  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], gulp.task('imagemin'));
+  watch(['./src/other/**/*'], gulp.task('copy-other'));
+}));
 
 // ビルドタスクの設定。gulp buildを実行した時。
 gulp.task('build', gulp.series( gulp.parallel('html','styles','javascript','imagemin','copy-other')))
