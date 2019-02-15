@@ -1,6 +1,20 @@
 @charset "UTF-8"
 
-// テキスト周り用mixin
+// テキスト周り用mixin。$lineHeightの引数をpxで指定したい場合は$fontSizeにfont-sizeを入れる。
+=lineHeightCrop($lineHeight, $fontSize: "")
+  line-height: $lineHeight
+  &::before
+    content: ''
+    display: block
+    height: 0
+    width: 0
+
+    $argumentUnit: unit($lineHeight)
+    @if ($argumentUnit == "px")
+      margin-top: ($lineHeight - $fontSize) / -2
+    @else
+      margin-top: calc(.5em * #{1 - $lineHeight})
+
 
 // ol>liタグなどで、自動的に要素に順番に番号を振っていく。dl>dtなどにも使える。
 // beforeとafter
