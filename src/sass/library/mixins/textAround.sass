@@ -1,6 +1,8 @@
 @charset "UTF-8"
 
-// テキスト周り用mixin。$lineHeightの引数をpxで指定したい場合は$fontSizeにfont-sizeを入れる。
+// テキスト周り用mixin。
+
+// line-heightの最初の行の調整用mixin。$lineHeightの引数をpxで指定したい場合は$fontSizeにfont-sizeを入れる。
 =lineHeightCrop($lineHeight, $fontSize: "")
   line-height: $lineHeight
   &::before
