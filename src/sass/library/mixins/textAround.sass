@@ -18,7 +18,7 @@
     @if ($argumentUnit == "px")
       margin-top: ($lineHeight - $fontSize) / -2
     @else
-      margin-top: calc(.5em * #{1 - $lineHeight})
+      margin-top: ((1 - $lineHeight) / 2) + em
 
 
 // ol>liタグなどで、自動的に要素に順番に番号を振っていく。dl>dtなどにも使える。
