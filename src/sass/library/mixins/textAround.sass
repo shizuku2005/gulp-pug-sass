@@ -4,6 +4,10 @@
 
 // line-heightの最初の行の調整用mixin。$lineHeightの引数をpxで指定したい場合は$fontSizeにfont-sizeを入れる。
 =lineHeightCrop($lineHeight, $fontSize: "")
+  $argumentUnit: unit($lineHeight)
+  @if $argumentUnit == "px" and $fontSize > $lineHeight
+    @error "$fontSizeの値は$lineHeightの値より小さい値を入れてください。"
+  
   line-height: $lineHeight
   &::before
     content: ''
@@ -11,7 +15,6 @@
     height: 0
     width: 0
 
-    $argumentUnit: unit($lineHeight)
     @if ($argumentUnit == "px")
       margin-top: ($lineHeight - $fontSize) / -2
     @else
