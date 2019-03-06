@@ -5,7 +5,6 @@
 オープンにすることで、スクール以外の方にも有効に使ってもらえるようにしています。
 初心者が使うことを想定しているので、このREADMEとgulpfile.js、それぞれのファイルには細かいメモや説明などが記載されています。
 基本的にフリーなものですが、このリポジトリ自体を使った商用的な利用や、２次配布などはやめてください。
-利用するときなどは、（以下SNSなどで）一言連絡頂ければ幸いです。
 
 製作者Webページ
 https://kazuma-takeda.com/
@@ -20,41 +19,41 @@ https://qiita.com/hbsnow/items/8eb7009b3ed716bc48a4#gulp-cached-gulp-changed
 - 新しくgulpのプラグインを追加するときは、以下のブラックリストに入っていないか確認し、入っていた場合は、注意する。理由を調べるなど。また、同じようなプラグインがいくつかある場合があるので、追加する際は調べる。
 https://github.com/gulpjs/plugins/blob/master/src/blackList.json
 - gulp-sass-globという、sassのimportでワイルトカードを利用可能にするプラグインがあるが、上手くいかないので、そのうち解消したい。。。参考サイト → https://www.nxworld.net/services-resource/gulp-plugin-gulp-sass-glob.html
-  stylusを使用すればデフォルトで使用できる。
+stylusを使用すればデフォルトで使用できる。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 ## 基本的なコマンド・スクリプト
-- gulp
+- `gulp`
   ルートディレクトリでこのコマンドを打つと、ローカルサーバーが立ち上がり、ブラウザのタブが新たに開かれ、dist/index.htmlが表示される。表示されない場合はブラウザリロードする。ファイルの監視も行われる。中止したい場合は`control + c`コマンド
-- gulp build
+- `gulp build`
   ビルドコマンド。サーバーを立ち上げたくないが、buildしたいときに有効
-- gulp html|styles|javascript|imagemin...
+- `gulp html|styles|javascript|imagemin...`
   それぞれに定義されたタスクを叩く。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 ## 基本的なディレクトリ・ファイル構成
-- dist
+- `dist`
 出力ファイル。基本的にこのディレクトリ以下をサーバーにUPする。基本的にこのディレクトリ内を操作しない。
 
-- src
+- `src`
 実際にいじるファイル群。
 
-- gulpfile.js
+- `gulpfile.js`
 gulpにやらせるタスクの設定を書くファイル。
 
-- package.json, package-lock.json
+- `package.json, package-lock.json`
 gulpのプラグインのバージョン管理。
 
-- node_modules
+- `node_modules`
 node.jsの本体とプラグインが格納されている。
 
-- cacheClear.sh
+- `cacheClear.sh`
 うまくコンパイル出来ない時に使うシェル。
 gulpにキャッシュが溜まった時、pugやsassがうまくコンパイルされない時があるので、このシェルを実行し、リセットする。
 
-- releaseInit.sh
+- `releaseInit.sh`
 本番環境適用時に実行するシェル。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -90,7 +89,7 @@ gulpにキャッシュが溜まった時、pugやsassがうまくコンパイル
 ### 上記ではそれぞれタスクを書いているが、初期設定では以下のようになっている
 - 本番環境ビルド以外では基本的にHTML・CSS・JSは圧縮しない。
 - 本番環境ビルド以外ではCSS・JSのインライン化はしない。インライン化させると、CSSなどのファイル変更時にブラウザリロードさせる機能と併用出来ない為。
-- 検証環境がある場合、ogタグの設定は検証環境のURLを参照させる。
+- 検証環境がある場合、ogpの設定は検証環境のURLを参照させる。
 - 本番環境ビルド以外ではhtmlのhead内に、metaタグnoindexを設置（Googleにインデックスさせないことにより、検索しても出てこないようにする設定）
 
 ### 本番環境適用時・サイトリリース時にはreleaseInit.shを実行する。
@@ -106,20 +105,20 @@ gulpにキャッシュが溜まった時、pugやsassがうまくコンパイル
 
 ## Pugについて
 ### ディレクトリ構成
-- data
+- `data`
   このファイルはサイトの設定や共通項目を格納しておくファイル。サイトのタイトルや、ドメインなどを管理する。
-- includes以下
+- `includes以下`
   各共通パーツなどを定義し、呼び出す。
-- layouts以下
+- `layouts以下`
   includes以下などをどのように呼び出すかなどを定義する。
   汎用的な設定に初期設定でしていますが、サイトやプロジェクトに合わせて増やす。
-- mixins以下
+- `mixins以下`
   もしmixinを作るのであれば、この中に追記していく。
-- pages以下
+- `pages以下`
   実際に出力されるファイルを定義する。ページを増やすごとにpugファイルを増やす。このディレクトリ以下はディレクトリ構造もそのまま保持してdist以下に出力される。
 
 ## faviconとアイコンについて
-/includes/meta.pug に記載のfaviconとアイコンの設定は以下のURLを参考。基本的にPCとSPのファビコンやホーム画面、お気に入りアイコンなど様々なアイコンをサポート。
+includes/meta.pug に記載のfaviconとアイコンの設定は以下のURLを参考。基本的にPCとSPのファビコンやホーム画面、お気に入りアイコンなど様々なアイコンをサポート。
 180px×180pxと64px×64pxのfavicon.icoとapple-touch-icon.pngを（名前は揃える）img直下に保存。画像の作り方は以下のURLのようなジェネレーターで作成するか、デザイナーに作成依頼。
 - https://mamewaza.com/support/blog/favicon2017.html
 - https://www.icoconverter.com/
@@ -133,26 +132,28 @@ https://pugjs.org/api/getting-started.html
 
 ## Sassについて
 ### ディレクトリ構成
-- styles
+- `styles`
   全てのscssを読み込む為のファイル。
-- config
+- `config`
   scssの設定や、共通変数などを定義する。
-- variables
+- `variables`
   変数を定義する為のファイル
-- reset
+- `reset`
   いわゆるリセットCSS。
-- base
+- `base`
   サイト全体で基盤となるscssを定義する。
   ファイル内の記述が多くなってしまう場合はファイル分割などをする。
-- library/functions以下
+- `library/functions以下`
   サイト全体で使える汎用的なsass関数を定義する。
-- library/mixins以下
+  色々な記事やリポジトリを参考にさせていただいてます。
+- `library/mixins以下`
   サイト全体で使える汎用的なmixinを定義する。もしファイルを増やす場合は、base.scssに読み込み設定を追記する。
-- library/projectMixins以下
+  こちらも色々な記事やリポジトリを参考にさせていただいてます。
+- `library/projectMixins以下`
   そのプロジェクト（サイト内）で独自に使うmixinを定義
-- components
+- `components`
   パーツ毎に共通で使えるスタイルを記述する。ボタンやメニューやモーダルなど。
-- modules以下
+- `modules以下`
   BEM記法でいうBlockを定義する。ヘッダーやフッターなど
 
 ## JSについて
@@ -173,4 +174,4 @@ gulpfileではdistディレクトリにコピーされるタスクのみ記述�
 
 ## ページを増やす(HTMLを増やす)際の手順
 1. `src/pug/pages`以下に増やしたい分のpugファイルを作成。pugの記述の仕方はサンプルファイルを参照。
-2. 同じく`src/pug/data.pug`に増やした分のファイルの設定を`var settings`内に例を見ながら記述。
+2. 同じく`src/pug/data.pug`に増やした分のファイルの設定を`settings`内に例を見ながら記述。
