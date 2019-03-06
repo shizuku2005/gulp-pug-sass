@@ -19,7 +19,7 @@ https://qiita.com/hbsnow/items/8eb7009b3ed716bc48a4#gulp-cached-gulp-changed
 - 新しくgulpのプラグインを追加するときは、以下のブラックリストに入っていないか確認し、入っていた場合は、注意する。理由を調べるなど。また、同じようなプラグインがいくつかある場合があるので、追加する際は調べる。
 https://github.com/gulpjs/plugins/blob/master/src/blackList.json
 - gulp-sass-globという、sassのimportでワイルトカードを利用可能にするプラグインがあるが、上手くいかないので、そのうち解消したい。。。参考サイト → https://www.nxworld.net/services-resource/gulp-plugin-gulp-sass-glob.html
-stylusを使用すればデフォルトで使用できる。
+stylusを使用すればデフォルトで使用できる。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
