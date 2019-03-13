@@ -17,9 +17,12 @@
   "license": "MID",
   "homepage": "",
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-cached": "^1.1.1",
     "gulp-changed": "^3.2.0",
     "gulp-clean-css": "^4.0.0",

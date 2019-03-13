@@ -36,6 +36,8 @@ let gulp =  require('gulp')
     uglify = require('gulp-uglify')
     // 複数のJSファイルを一つにまとめる
     concat = require("gulp-concat")
+    // ES5にJSを変換
+    babel = require('gulp-babel')
 
     // 画像の圧縮
     imagemin = require('gulp-imagemin')
@@ -172,6 +174,7 @@ gulp.task('javascript', () => {
   return gulp.src(src.js)
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
+    .pipe(babel())
     // JSの圧縮
     .pipe(gulpif(isProduction, uglify()))
     // 全てのJSファイルをscriptファイル一つにまとめる。
