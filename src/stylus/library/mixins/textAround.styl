@@ -4,7 +4,7 @@
 
 // line-heightの最初の行の調整用mixin。$lineHeightの引数をpxで指定したい場合は$fontSizeにfont-sizeを入れる。
 lineHeightCrop($lineHeight, $fontSize = "")
-  line-height: $lineHeight
+  line-height $lineHeight
   &::before
     content ''
     display block
@@ -13,10 +13,10 @@ lineHeightCrop($lineHeight, $fontSize = "")
 
     $argumentUnit = unit($lineHeight)
     if $argumentUnit == "px"
-      margin-top: (($lineHeight - $fontSize) / -2)
+      margin-top (($lineHeight - $fontSize) / -2)
     else
       $adjustMargin = 1 - $lineHeight
-      margin-top: ($adjustMargin / 2)em
+      margin-top ($adjustMargin / 2)em
 
 // ol>liタグなどで、自動的に要素に順番に番号を振っていく。dl>dtなどにも使える。
 // beforeとafter
@@ -35,88 +35,88 @@ lineHeightCrop($lineHeight, $fontSize = "")
 //  ・upper-roman - 大文字のローマ数字 (I, II, III, IV, V 等)
 //  他にもいくつかあるが、恐らく使わない為、省略
 autoNumbering($incrementer = items, $target = "li", $shifter = true, $fontSize = inherit, $startText = "", $endText = ".", $space = 20px, $topPosition = 0, $leftPosition = 0, $counterType = decimal, $startNumber = 0, $increase = 1, $beforeOrAfter = before)
-  counter-reset: $incrementer $startNumber
+  counter-reset $incrementer $startNumber
 
   > {$target}
     if $beforeOrAfter == before
       if $shifter
-        position: relative
-        padding-left: $space
+        position relative
+        padding-left $space
 
       &::before
-        font-size: $fontSize
-        counter-increment: $incrementer $increase
-        content: $startText counter($incrementer, $counterType) $endText
+        font-size $fontSize
+        counter-increment $incrementer $increase
+        content $startText counter($incrementer, $counterType) $endText
 
         if $shifter
-          position: absolute
-          top: $topPosition
-          left: $leftPosition
+          position absolute
+          top $topPosition
+          left $leftPosition
         else
-          margin-right: $space
+          margin-right $space
 
     if $beforeOrAfter == after
       &::after
-        font-size: $fontSize
-        counter-increment: $incrementer $increase
-        content: $startText counter($incrementer, $counterType) $endText
+        font-size $fontSize
+        counter-increment $incrementer $increase
+        content $startText counter($incrementer, $counterType) $endText
 
-        margin-left: $space
+        margin-left $space
 
 // アンチエイリアス
 antialiased()
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
 
 // 文字にグラデーション
 gradientText($angle = 45deg, $color = #f00, $amount = 50%)
-  color: $color
-  background: -webkit-linear-gradient($angle, $color, adjust-hue($color, $amount))
-  -webkit-text-fill-color: transparent
-  -webkit-background-clip: text
+  color $color
+  background -webkit-linear-gradient($angle, $color, adjust-hue($color, $amount))
+  -webkit-text-fill-color transparent
+  -webkit-background-clip text
 
 // 単数行三点リーダ
 ellipsis($width = 100%)
-  width: $width
-  max-width: 100%
-  display: block
-  overflow: hidden
-  white-space: nowrap
-  text-overflow: ellipsis
+  width $width
+  max-width 100%
+  display block
+  overflow hidden
+  white-space nowrap
+  text-overflow ellipsis
 
 // 複数行三点リーダ スタイルによっては上手くいかないので、引数など上手く使い調整する
 multilineEllipsis($fontSize = 14px, $lineHeight = 1.3, $lines = 2, $bg = #fff)
   // Reset
-  overflow: hidden
-  width: 100%
-  text-align: justify
+  overflow hidden
+  width 100%
+  text-align justify
   > p:first-child
-    font-size: $fontSize
-    height: $fontSize * $lineHeight * $lines
-    line-height: $lineHeight
-    overflow: hidden
-    position: relative
+    font-size $fontSize
+    height $fontSize * $lineHeight * $lines
+    line-height $lineHeight
+    overflow hidden
+    position relative
     &::before,
     &::after
-      position: absolute
+      position absolute
 
     &::before
-      content: "..."
-      top: $fontSize * $lineHeight * ($lines - 1)
-      right: 0
-      background: $bg
-      padding-left: .1em
-      box-shadow: $bg -3px 0 5px 0px
+      content "..."
+      top $fontSize * $lineHeight * ($lines - 1)
+      right 0
+      background $bg
+      padding-left .1em
+      box-shadow $bg -3px 0 5px 0px
     &::after
-      content: ""
-      height: 100%
-      width: 100%
-      background: $bg
-      transform: skew(-50deg) translateX(-0.05em)
+      content ""
+      height 100%
+      width 100%
+      background $bg
+      transform skew(-50deg) translateX(-0.05em)
 
   +mediaqueryTablet()
     > p
       &::before
-        box-shadow: $bg -2px 0 3px 0px
+        box-shadow $bg -2px 0 3px 0px
       &::after
-        transform: skew(-50deg) translateX(-0.2em)
+        transform skew(-50deg) translateX(-0.2em)

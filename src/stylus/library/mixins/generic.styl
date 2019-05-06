@@ -7,20 +7,20 @@ mediaqueryTablet()
 
 // hover animationの定義 例では一般的な透明度の指定。SPではバグのような表示になりやすい為、必ず削除。
 hover()
-  transition: $transitionTime
+  transition $transitionTime
   &:hover
-    opacity: .7
+    opacity .7
 
   +mediaqueryTablet()
     &:hover
-      opacity: 1
+      opacity 1
 
 // 背景のよく使われる上下真ん中寄せの設定
 backgroundImg($path, $position = center, $addpath = "")
-  background: url("{$addpath}" + imageUrl() + "{$path}")
-  background-size: cover
-  background-position: $position
-  background-repeat: no-repeat
+  background url("{$addpath}" + imageUrl() + "{$path}")
+  background-size cover
+  background-position $position
+  background-repeat no-repeat
 
 // borderで三角形を作る為のmixin。全8方向対応。初期値はてきとうなので、適宜引数を使用 ※適用未確認
 triangle($direction = "right", $width = 5px, $height = 5px, $color = #333)
@@ -29,30 +29,30 @@ triangle($direction = "right", $width = 5px, $height = 5px, $color = #333)
   else if not _is-color($color)
     error "`{$color}` is not a valid color for the `$color` argument in " + "the `triangle` mixin."
   else
-    border-style: solid
-    height: 0
-    width: 0
+    border-style solid
+    height 0
+    width 0
     if $direction == "up"
-      border-color: transparent transparent $color
-      border-width: 0 ($width / 2) $height
+      border-color transparent transparent $color
+      border-width 0 ($width / 2) $height
     else if $direction == "up-right"
-      border-color: transparent $color transparent transparent
-      border-width: 0 $width $width 0
+      border-color transparent $color transparent transparent
+      border-width 0 $width $width 0
     else if $direction == "right"
-      border-color: transparent transparent transparent $color
-      border-width: ($height / 2) 0 ($height / 2) $width
+      border-color transparent transparent transparent $color
+      border-width ($height / 2) 0 ($height / 2) $width
     else if $direction == "down-right"
-      border-color: transparent transparent $color
-      border-width: 0 0 $width $width
+      border-color transparent transparent $color
+      border-width 0 0 $width $width
     else if $direction == "down"
-      border-color: $color transparent transparent
-      border-width: $height ($width / 2) 0
+      border-color $color transparent transparent
+      border-width $height ($width / 2) 0
     else if $direction == "down-left"
-      border-color: transparent transparent transparent $color
-      border-width: $width 0 0 $width
+      border-color transparent transparent transparent $color
+      border-width $width 0 0 $width
     else if $direction == "left"
-      border-color: transparent $color transparent transparent
-      border-width: ($height / 2) $width ($height / 2) 0
+      border-color transparent $color transparent transparent
+      border-width ($height / 2) $width ($height / 2) 0
     else if $direction == "up-left"
-      border-color: $color transparent transparent
-      border-width: $width $width 0 0
+      border-color $color transparent transparent
+      border-width $width $width 0 0
