@@ -18,11 +18,12 @@
 let gulp =  require('gulp')
     // pugのコンパイル
     pug = require('gulp-pug')
-
     // sassのコンパイル
     sass = require('gulp-sass')
-    // ベンダープレフィックスの自動付与。
-    autoprefixer = require('gulp-autoprefixer')
+    // autoprefixerを使う為に必要
+    postcss = require('gulp-postcss')
+    // ベンダープレフィックスの自動付与。css gridなどの自動最適化
+    autoprefixer = require('autoprefixer')
     // sassのimportでワイルトカードを利用可能にするプラグイン
     glob = require('gulp-sass-glob')
     // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
@@ -154,12 +155,15 @@ gulp.task('styles', () =>  {
     .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
     .pipe(gulpif(!isProduction, sourcemaps.init({loadMaps: true})))
 
+    .pipe(postcss([
       // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
-    .pipe(autoprefixer({
-      // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
-      browsers: ['last 2 version'],
-      grid: true
-    }))
+      autoprefixer({
+        // css gridに対応
+        grid: true,
+        // 不要な整形をしない
+        cascade: false
+      })
+    ]))
     // cssの圧縮を(trueで)有効化
     .pipe(gulpif(isProduction, cleanCSS()))
 

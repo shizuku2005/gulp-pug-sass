@@ -7,15 +7,16 @@
   @media screen and (max-width: $breakPointTablet)
     @content
 
+=mediaqueryPc
+  @media screen and (min-width: $breakPointTablet + 1px)
+    @content
+
 // hover animationの定義 例では一般的な透明度の指定。SPではバグのような表示になりやすい為、必ず削除。
 =hover
-  transition: $transition
-  &:hover
-    opacity: .7
-
-  +mediaqueryTablet
+  +mediaqueryPc
+    transition: $transitionTime
     &:hover
-      opacity: 1
+      opacity: .7
 
 // 背景のよく使われる上下真ん中寄せの設定
 =backgroundImg($path, $position: center, $addpath: "")
