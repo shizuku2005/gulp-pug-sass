@@ -21,8 +21,10 @@ let gulp =  require('gulp')
 
     // stylusのコンパイル
     stylus = require('gulp-stylus')
-    // ベンダープレフィックスの自動付与。
-    autoprefixer = require('gulp-autoprefixer')
+    // autoprefixerを使う為に必要
+    postcss = require('gulp-postcss')
+    // ベンダープレフィックスの自動付与。css gridなどの自動最適化
+    autoprefixer = require('autoprefixer')
     // ソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
     sourcemaps = require('gulp-sourcemaps')
     // cssの圧縮
@@ -141,11 +143,12 @@ gulp.task('styles', () =>  {
     .pipe(gulpif(!isProduction, sourcemaps.write()))
 
     // ベンダープレフィックスの自動付与と各ブラウザ固有の書き方の追記
-    .pipe(autoprefixer({
-      // ベンダープレフィックス自動付与の対象ブラウザ。この場合は各ブラウザの最新2バージョンのまでを対象。
-      browsers: ['last 2 version'],
-      grid: true
-    }))
+    .pipe(postcss([
+      autoprefixer({
+        grid: true,
+        cascade: false
+      })
+    ]))
     // cssの圧縮を(trueで)有効化
     .pipe(gulpif(isProduction, cleanCSS()))
     // ソースマップの書き出し
