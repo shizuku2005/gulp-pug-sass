@@ -183,7 +183,7 @@ gulp.task('imagemin', () => {
         pngquant({
 
           // 圧縮率の指定
-          quality: '65-80',
+          quality: [.65, .8],
 
           // 圧縮スピードの指定。1が一番遅いが、圧縮率が高い。
           speed: 1,
