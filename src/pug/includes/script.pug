@@ -1,7 +1,7 @@
 - var pagePath = page.path || ""
 
 if environment == "development" || !inlining
-  script(src=pagePath+readingJsUrl)
+  script(src=pagePath+readingJsUrl defer)
 else if environment == "production" && inlining
   script.
     @@include(pagePath+readingJsUrl)
