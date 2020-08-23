@@ -45,7 +45,7 @@
     "imagemin-pngquant": "6.0.0",
     "install": "^0.12.2",
     "minimatch": "^3.0.4",
-    "npm": "^6.10.1",
+    "npm": "^6.14.6",
     "path": "^0.12.7",
     "plumber": "^0.4.8",
     "yargs": "^13.2.4"
