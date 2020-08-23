@@ -15,62 +15,62 @@
 /* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
 // gulpプラグインの読み込み
-let gulp =  require('gulp')
-    // pugのコンパイル
-    pug = require('gulp-pug')
-    // sassのコンパイル
-    sass = require('gulp-sass')
-    // autoprefixerを使う為に必要
-    postcss = require('gulp-postcss')
-    // ベンダープレフィックスの自動付与。css gridなどの自動最適化
-    autoprefixer = require('autoprefixer')
-    // sassのimportでワイルトカードを利用可能にするプラグイン
-    glob = require('gulp-sass-glob')
-    // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
-    sourcemaps = require('gulp-sourcemaps')
-    // 環境ごとの変数の値を変える
-    sassVariables = require('gulp-sass-variables'),
-    // cssの圧縮
-    cleanCSS = require('gulp-clean-css'),
+const gulp =  require('gulp')
+      // pugのコンパイル
+      pug = require('gulp-pug')
+      // sassのコンパイル
+      sass = require('gulp-sass')
+      // autoprefixerを使う為に必要
+      postcss = require('gulp-postcss')
+      // ベンダープレフィックスの自動付与。css gridなどの自動最適化
+      autoprefixer = require('autoprefixer')
+      // sassのimportでワイルトカードを利用可能にするプラグイン
+      glob = require('gulp-sass-glob')
+      // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
+      sourcemaps = require('gulp-sourcemaps')
+      // 環境ごとの変数の値を変える
+      sassVariables = require('gulp-sass-variables'),
+      // cssの圧縮
+      cleanCSS = require('gulp-clean-css'),
 
-    // javascriptの圧縮
-    uglify = require('gulp-uglify')
-    // 複数のJSファイルを一つにまとめる
-    concat = require("gulp-concat")
-    // ES5にJSを変換
-    babel = require('gulp-babel')
+      // javascriptの圧縮
+      uglify = require('gulp-uglify')
+      // 複数のJSファイルを一つにまとめる
+      concat = require("gulp-concat")
+      // ES5にJSを変換
+      babel = require('gulp-babel')
 
-    // 画像の圧縮
-    imagemin = require('gulp-imagemin')
-    // pngの圧縮
-    pngquant = require("imagemin-pngquant")
-    // jpegの圧縮
-    mozjpeg = require('imagemin-mozjpeg')
+      // 画像の圧縮
+      imagemin = require('gulp-imagemin')
+      // pngの圧縮
+      pngquant = require("imagemin-pngquant")
+      // jpegの圧縮
+      mozjpeg = require('imagemin-mozjpeg')
 
-    // gulp実行時にブラウザを立ち上げる。
-    browserSync = require('browser-sync')
-    // エラーでgulpが止まるのを防ぐ
-    plumber = require('gulp-plumber')
-    // エラーのリアルタイム通知
-    notify = require("gulp-notify")
-    // gulpのキャッシュ
-    cache = require('gulp-cached')
-    // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われる。
-    changed = require('gulp-changed')
-    // if文を使えるようにする。
-    gulpif = require('gulp-if')
-    // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
-    // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
-    // https://www.npmjs.com/package/gulp-file-include
-    fileinclude = require('gulp-file-include')
-    // コマンドにオプションを指定する。
-    yargs = require('yargs').argv
-    // ファイル変更や、追加をgulpで検知する
-    watch = require("gulp-watch");
+      // gulp実行時にブラウザを立ち上げる。
+      browserSync = require('browser-sync')
+      // エラーでgulpが止まるのを防ぐ
+      plumber = require('gulp-plumber')
+      // エラーのリアルタイム通知
+      notify = require("gulp-notify")
+      // gulpのキャッシュ
+      cache = require('gulp-cached')
+      // こちらもキャッシュ機能。cachedとの違いは前者がストリームをメモリにキャッシュして、後者はファイル比較をしているということだと思われる。
+      changed = require('gulp-changed')
+      // if文を使えるようにする。
+      gulpif = require('gulp-if')
+      // ファイルをインライン呼び出しすることができるプラグインです。今回はCSSやJSのインライン呼び出しを実現している。
+      // 他にも色々な使い方ができるみたいなので、興味ある人は調べて見ること
+      // https://www.npmjs.com/package/gulp-file-include
+      fileinclude = require('gulp-file-include')
+      // コマンドにオプションを指定する。
+      yargs = require('yargs').argv
+      // ファイル変更や、追加をgulpで検知する
+      watch = require("gulp-watch");
 
 
 // 開発用ディレクトリの指定
-let src = {
+const src = {
   // 出力対象は`_`で始まっていない`.pug`ファイル。
   'html': ['./src/pug/pages/**/*.pug'], //, '!' + './src/pug/**/_*.pug'],
   'styles': ['./src/sass/styles.+(sass|scss)'],
@@ -80,13 +80,13 @@ let src = {
 }
 
 // 出力ディレクトリの指定
-let dest = {
+const dest = {
   'root': './dist/'
 }
 
-let isProduction = (yargs.env === 'production') ? true : false;
-let environment = (yargs.env === 'production') ? 'production' : 'development';
-let inlining = (yargs.inline === 'true') ? true : false;
+const isProduction = (yargs.env === 'production') ? true : false;
+const environment = (yargs.env === 'production') ? 'production' : 'development';
+const inlining = (yargs.inline === 'true') ? true : false;
 
 gulp.task('test', (done) => {
   console.log('isProduction:'+isProduction);
@@ -149,7 +149,7 @@ gulp.task('styles', () =>  {
 
     .pipe(sassVariables({ $env: environment }))
     // sassのコンパイル
-    .pipe(sass())
+    .pipe(sass({outputStyle: 'expanded'}))
 
     // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
     .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))
@@ -249,7 +249,7 @@ gulp.task('browser-sync', () =>  {
 })
 
 // gulp実行時に発火させるタスクと、ファイルの監視の設定
-gulp.task('default', gulp.parallel(gulp.series('html', 'styles', 'javascript', 'imagemin', 'copy-other', 'browser-sync'), function () {
+gulp.task('default', gulp.parallel(gulp.series('html', 'styles', 'javascript', 'imagemin', 'copy-other', 'browser-sync'), () => {
   watch(['./src/**/*.pug'], gulp.task('html'));
   watch(['./src/sass/**/*.+(scss|sass)'], gulp.task('styles'));
   watch(['./src/js/**/*.js'], gulp.task('javascript'));
