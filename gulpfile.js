@@ -20,12 +20,12 @@ const gulp =  require('gulp')
       pug = require('gulp-pug')
       // sassのコンパイル
       sass = require('gulp-sass')
+      // sassのコンパイル速度を向上させる為のもの
+      fibers = require('fibers')
       // autoprefixerを使う為に必要
       postcss = require('gulp-postcss')
       // ベンダープレフィックスの自動付与。css gridなどの自動最適化
       autoprefixer = require('autoprefixer')
-      // sassのimportでワイルトカードを利用可能にするプラグイン
-      glob = require('gulp-sass-glob')
       // sassのソースマップ（コンパイルや圧縮が行われたファイルの、元の位置を確認できるようにする仕組み）を出力
       sourcemaps = require('gulp-sourcemaps')
       // 環境ごとの変数の値を変える
@@ -132,24 +132,25 @@ gulp.task('html', () =>  {
     .pipe(browserSync.reload({stream: true}))
 })
 
+
 // sassのコンパイルなど
+sass.compiler = require('sass');
 gulp.task('styles', () =>  {
   return gulp.src(src.styles)
     // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
     // .pipe(cache('styles'))
-
-    // ワイルドカードでsassのincludeが実現できる。@import "partials/*";など
-    // 上手く行かず...解消したい。
-    // .pipe(glob())
 
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
     // ソースマップを書き出す準備
     .pipe(gulpif(!isProduction, sourcemaps.init()))
 
-    .pipe(sassVariables({ $env: environment }))
+    // .pipe(sassVariables({ $env: environment }))
     // sassのコンパイル
-    .pipe(sass({outputStyle: 'expanded'}))
+    .pipe(sass(
+      { outputStyle: 'expanded' },
+      { fibers: fibers }
+    ))
 
     // 以下２行を追加しないとautoprefixerプラグインと一緒に使用した場合、ソースマップが上手く出力しない。
     .pipe(gulpif(!isProduction, sourcemaps.write({includeContent: false})))

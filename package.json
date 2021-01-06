@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.11.0",
     "autoprefixer": "^9.8.6",
     "browser-sync": "^2.26.12",
+    "fibers": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cached": "^1.1.1",
@@ -35,7 +36,6 @@
     "gulp-postcss": "^8.0.0",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.1.0",
-    "gulp-sass-glob": "^1.1.0",
     "gulp-sass-variables": "^1.2.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
@@ -43,6 +43,7 @@
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-pngquant": "^9.0.0",
     "npm": "^6.14.8",
+    "sass": "^1.32.0",
     "yargs": "^15.4.1"
   },
   "dependencies": {

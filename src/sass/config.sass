@@ -2,15 +2,15 @@
 // -- -- z-indexの管理 -- --
 $z-map: header
 
-@function z($name) 
+@function z($name)
   @return index($z-map, $name)
 // 使用例
 // z-index: z(header); // 1
 
 
 // -- -- 画像パス -- --
-@function imageUrl
-  @if ($env == "production") 
+@function imageUrl()
+  @if ($env == "production")
     @return "img/"
   @else
     @return "../img/"
