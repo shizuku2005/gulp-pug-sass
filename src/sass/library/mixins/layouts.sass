@@ -1,16 +1,19 @@
 @charset "UTF-8"
 
+@use '../../variables' as var
+@use 'generic'
+
 =pcInner($marginTop: 0, $marginBottom: 0, $paddingSide: 20px, $paddingUpdown: 0px)
   width: 100%
-  max-width: $pcWidth
+  max-width: var.$pcWidth
   margin: $marginTop auto $marginBottom
   padding: 0 $paddingSide
-  +mediaqueryTablet
+  +generic.mediaqueryTablet()
     padding-right: 0
     padding-left: 0
 
 =spInner
-  width: $spWidth
+  width: var.$spWidth
   margin-right: auto
   margin-left: auto
 

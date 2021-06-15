@@ -1,17 +1,14 @@
 @charset "UTF-8"
 
-@import 'reset'
+@use 'reset'
 
-@import 'config'
+@use 'config'
 
-@import 'variables'
+@use 'variables'
+@use 'includes'
 
-@import 'library/functions/**'
-@import 'library/mixins/**'
-@import 'library/projectMixins/**'
+@use 'base'
 
-@import 'base'
+@use 'components/component'
 
-@import 'components/**'
-
-@import 'modules/**'
+@use 'modules/module'

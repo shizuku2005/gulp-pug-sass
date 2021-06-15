@@ -1,5 +1,7 @@
 @charset "UTF-8"
 
+@use 'library/mixins/generic' as generic
+
 body
   font-family: "Dosis", "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif
   font-size: 16px
@@ -45,7 +47,7 @@ body
   display: none
   color: #000
 
-+mediaqueryTablet
++generic.mediaqueryTablet
   .pcview
     display: none
   .spview
