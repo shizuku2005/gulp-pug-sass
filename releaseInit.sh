@@ -13,7 +13,7 @@ esac
 echo "CSSとJSはインライン化させますか？ [yes/no]"
 read Inlining
 
-gulp styles javascript imagemin copy-other --env=production
+gulp styles javascript imageminTask copyOther --env=production
 
 case $Inlining in
   "" | "Y" | "y" | "yes" | "Yes" | "YES" )

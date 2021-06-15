@@ -9,5 +9,5 @@ rm -rf node_modules
 npm install
 esac
 
-gulp styles javascript imagemin copy-other
+gulp styles javascript imageminTask copyOther
 gulp html

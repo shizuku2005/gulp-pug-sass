@@ -1,7 +1,7 @@
 # Pug,Sass,JSをGulpでいち早く使う為のリポジトリ
 
 ## 注意！
-nodeのバージョンは、`v14.16.0`推奨です。
+nodeのバージョンは、`v14.17.1`推奨です。
 v15系では動作しない可能性があります。
 
 ## 目的など
@@ -22,8 +22,6 @@ https://qiita.com/oreo3@github/items/0f037e7409be02336cb9
 https://qiita.com/hbsnow/items/8eb7009b3ed716bc48a4#gulp-cached-gulp-changed
 - 新しくgulpのプラグインを追加するときは、以下のブラックリストに入っていないか確認し、入っていた場合は、注意する。理由を調べるなど。また、同じようなプラグインがいくつかある場合があるので、追加する際は調べる。
 https://github.com/gulpjs/plugins/blob/master/src/blackList.json
-- gulp-sass-globという、sassのimportでワイルトカードを利用可能にするプラグインがあるが、上手くいかないので、そのうち解消したい。。。参考サイト → https://www.nxworld.net/services-resource/gulp-plugin-gulp-sass-glob.html
-stylusを使用すればデフォルトで使用できる。
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -163,9 +161,10 @@ https://pugjs.org/api/getting-started.html
 ## JSについて
 src/jsディレクトリ以下のファイルは全てdist/js以下にscript.jsとして出力される。
 初期時はダミーファイルが３つあり、ビルドすることで全てdist/js以下に一つのファイルにまとまって出力がされていることが確認できるようになっている。
+ファイルの読み込みの順番はアルファベット順になっているので注意。
 
 ## 画像について
-jpg,jpeg,png,gif,svgファイルは圧縮される。
+jpg, jpeg, png, gif, svgファイルは圧縮される。
 icoファイルに関してはdist/img以下にコピーはされるが、圧縮はされない。
 上記ファイル以外は監視もコピーもしないので、追加でサポートしたい拡張子があればgulpfile.jsで定義する。
 初期時はsrc/img以下にダミーファイルが用意してあり、ビルドすることでdist/img以下に圧縮された画像ファイルを確認できる。
