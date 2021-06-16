@@ -25,7 +25,7 @@
 /* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
 // gulpプラグインの読み込み
-const { task, src, dest, lastRun, series, parallel, watch } = require('gulp'),
+const { src, dest, lastRun, series, parallel, watch } = require('gulp'),
       // pugのコンパイル
       pug = require('gulp-pug'),
       // sassのコンパイル
@@ -59,7 +59,7 @@ const { task, src, dest, lastRun, series, parallel, watch } = require('gulp'),
       mozjpeg = require('imagemin-mozjpeg'),
 
       // gulp実行時にブラウザを立ち上げる。
-      browserSync = require('browser-sync'),
+      browserSync = require('browser-sync').create(),
       // エラーでgulpが止まるのを防ぐ
       plumber = require('gulp-plumber'),
       // エラーのリアルタイム通知
@@ -101,7 +101,7 @@ const isProduction = (yargs.env === 'production') ? true : false,
 
 
 // pugのコンパイルなど
-task('html', () => {
+const html = () => {
   // pugファイルの読み込み
   return src(srcPath.html, { since: lastRun('html') })
 
@@ -136,13 +136,13 @@ task('html', () => {
 
     // ブラウザの更新
     .pipe(browserSync.reload({stream: true}))
-})
+}
 
 
 
 // sassのコンパイルなど
 sass.compiler = require('sass')
-task('styles', () => {
+const styles = () => {
   return src(srcPath.styles)
     // sassのキャッシュ。ファイルが多くなってきて、コンパイル速度が落ちてきたら、ON
     // .pipe(cache('styles'))
@@ -180,12 +180,12 @@ task('styles', () => {
     .pipe(gulpif(!isProduction, sourcemaps.write()))
     .pipe(dest(destPath.root+'css/'))
     .pipe(browserSync.reload({stream: true}))
-})
+}
 
 
 
 // javascriptの圧縮
-task('javascript', () => {
+const javascript = () => {
   return src(srcPath.js)
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
 
@@ -196,12 +196,12 @@ task('javascript', () => {
     .pipe(concat('script.js'))
     .pipe(dest(destPath.root +'js/'))
     .pipe(browserSync.reload({stream: true}))
-})
+}
 
 
 
 // 画像の圧縮
-task('imageminTask', () => {
+const imageminTask = () => {
   return src(srcPath.images)
 
   // 変更・追加されたファイルだけを圧縮&出力
@@ -242,50 +242,48 @@ task('imageminTask', () => {
     ))
     .pipe(dest(destPath.root))
     .pipe(browserSync.reload({stream: true}))
-})
+}
 
 
 
 // その他ファイルのコピータスク
-task('copyOther', () => {
+const copyOther = () => {
   return src(srcPath.other)
     .pipe(dest(destPath.root))
     .pipe(browserSync.reload({stream: true}))
-})
+}
 
 
-// gulp実行時にサーバーを立ち上げ、デフォルトブラウザの新しいタブでWebページを表示する。
-task('browserSyncTask', () => {
-  browserSync({
+// gulp実行時にサーバーを立ち上げ、デフォルトブラウザの新しいタブでWebページを表示する
+const browserSyncTask = done => {
+  browserSync.init({
     server: {
-      baseDir: destPath.root,
+      baseDir: 'dist/',
       index: 'index.html'
     }
   })
-})
+  done()
+}
 
+// コンテンツ更新の際はブラウザをリロードする
+const taskWatch = done => {
+  watch(['./src/**/*.pug'], html)
+  watch(['./src/sass/**/*.+(scss|sass)'], styles)
+  watch(['./src/js/**/*.js'], javascript)
+  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], imageminTask)
+  watch(['./src/other/**/*'], copyOther)
+  done()
+}
 
 // 個別のタスクを呼び出せるように定義（gulp html など）
-exports.html = task('html')
-exports.styles = task('styles')
-exports.javascript = task('javascript')
-exports.imageminTask = task('imageminTask')
-exports.copyOther = task('copyOther')
+exports.html = html
+exports.styles = styles
+exports.javascript = javascript
+exports.imageminTask = imageminTask
+exports.copyOther = copyOther
 
 // ビルドタスクの設定。gulp buildを実行した時。サーバーは立ち上げたくないけど、ビルドだけしたい時に使う
-exports.build = parallel('html', 'styles', 'javascript', 'imageminTask', 'copyOther')
-
-
-
-// 各ファイルの監視タスク
-task('watch', done => {
-  watch(['./src/**/*.pug'], task('html'))
-  watch(['./src/sass/**/*.+(scss|sass)'], task('styles'))
-  watch(['./src/js/**/*.js'], task('javascript'))
-  watch(['./src/img/**/*.+(jpg|jpeg|png|gif|svg|ico)'], task('imageminTask'))
-  watch(['./src/other/**/*'], task('copyOther'))
-  done()
-})
+exports.build = parallel(html, styles, javascript, imageminTask, copyOther)
 
 // gulp 実行時に発火させるデフォルトタスク
-task('default', series(parallel('html', 'styles', 'javascript', 'imageminTask', 'copyOther'), parallel('watch', 'browserSyncTask')))
+exports.default = series(parallel(html, styles, javascript, imageminTask, copyOther), parallel(taskWatch, browserSyncTask))
